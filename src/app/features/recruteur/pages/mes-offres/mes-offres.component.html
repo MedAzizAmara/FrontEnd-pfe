@@ -1,0 +1,38 @@
+<div class="px-6 md:px-10 max-w-5xl mx-auto pb-10">
+
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-headline font-extrabold text-on-surface">Vos offres</h1>
+    <button
+      (click)="onPublierOffre()"
+      class="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold text-white shadow-md hover:brightness-110 active:scale-95 transition-all"
+      style="background: linear-gradient(135deg, #0040a1 0%, #0056d2 100%)">
+      <span class="material-symbols-outlined text-sm">add</span>
+      Publier une offre
+    </button>
+  </div>
+
+  <div class="flex flex-col gap-4" *ngIf="offres.length > 0; else vide">
+    <app-offre-card
+      *ngFor="let offre of offres"
+      [offre]="offre"
+      (voirCandidats)="onVoirCandidats($event)"
+      (modifier)="onModifier($event)"
+      (supprimer)="onSupprimer($event)"
+    />
+  </div>
+
+  <ng-template #vide>
+    <div class="flex flex-col items-center justify-center py-24 text-center text-on-surface-variant gap-4">
+      <span class="material-symbols-outlined text-5xl">work_off</span>
+      <p class="text-lg font-semibold font-headline">Aucune offre publiée</p>
+      <p class="text-sm">Commencez par publier votre première offre.</p>
+      <button
+        (click)="onPublierOffre()"
+        class="mt-2 px-5 py-2.5 rounded-lg text-sm font-bold text-white"
+        style="background: linear-gradient(135deg, #0040a1 0%, #0056d2 100%)">
+        Publier une offre
+      </button>
+    </div>
+  </ng-template>
+
+</div>

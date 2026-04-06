@@ -1,0 +1,25 @@
+<div class="px-6 md:px-10 max-w-5xl mx-auto pb-10">
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+
+    <app-interview-form
+      [societe]="societe"
+      [poste]="poste"
+      [telephone]="telephone"
+      [email]="email"
+      [nomRecruteur]="nomRecruteur"
+    />
+
+    <app-letter-preview
+      [societe]="societe"
+      [poste]="poste"
+      [date]="date"
+      [heure]="heure"
+      [telephone]="telephone"
+      [email]="email"
+      [nomRecruteur]="nomRecruteur"
+      (envoyer)="onEnvoyer()"
+    />
+
+  </div>
+</div>

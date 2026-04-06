@@ -1,0 +1,54 @@
+<div class="flex items-center justify-between mb-8">
+  <button
+    (click)="retourListe()"
+    class="flex items-center gap-2 text-primary font-bold hover:translate-x-[-4px] transition-transform">
+    <span class="material-symbols-outlined">arrow_back</span>
+    <span>RETOUR À LA LISTE</span>
+  </button>
+  <div class="flex items-center gap-4">
+    <app-status-badge [statut]="statut" />
+    <button class="bg-primary hover:bg-primary/90 text-white font-bold px-8 py-3 uppercase tracking-widest text-sm transition-all shadow-md rounded-lg">
+      Valider le compte
+    </button>
+  </div>
+</div>
+
+<div class="max-w-4xl mx-auto bg-white border border-slate-200 rounded-xl shadow-sm p-12 space-y-16">
+
+  <app-profile-header
+    [nom]="nom"
+    [titre]="titre"
+    [photoUrl]="photoUrl"
+  />
+
+  <app-info-section
+    titre="Informations Personnelles"
+    [age]="age"
+    [email]="email"
+    [telephone]="telephone"
+    [localisation]="localisation"
+  />
+
+  <app-info-section
+    titre="Informations Entreprise"
+    [nomEntreprise]="nomEntreprise"
+    [siteWeb]="siteWeb"
+  />
+
+  <app-company-logo
+    [nomEntreprise]="nomEntreprise"
+    [logoUrl]="logoUrl"
+  />
+
+  <app-info-section
+    titre="Historique"
+    [dateInscription]="dateInscription"
+  />
+
+  <app-patent-viewer
+    [imageUrl]="kbisImageUrl"
+    (accepter)="onAccepter()"
+    (refuser)="onRefuser()"
+  />
+
+</div>

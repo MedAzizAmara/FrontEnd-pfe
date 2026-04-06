@@ -1,0 +1,43 @@
+<div class="space-y-8">
+  <h3 class="text-sm font-black uppercase text-slate-400 tracking-[0.2em] border-b border-slate-100 pb-2">
+    {{ titre }}
+  </h3>
+  <div class="grid grid-cols-1 gap-8">
+
+    <div *ngIf="age" class="space-y-1">
+      <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Âge</label>
+      <p class="text-slate-900 font-semibold text-xl">{{ age }}</p>
+    </div>
+
+    <div *ngIf="email" class="space-y-1">
+      <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Email professionnel</label>
+      <p class="text-slate-900 font-semibold text-xl">{{ email }}</p>
+    </div>
+
+    <div *ngIf="telephone" class="space-y-1">
+      <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Téléphone</label>
+      <p class="text-slate-900 font-semibold text-xl">{{ telephone }}</p>
+    </div>
+
+    <div *ngIf="localisation" class="space-y-1">
+      <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Localisation</label>
+      <p class="text-slate-900 font-semibold text-xl uppercase">{{ localisation }}</p>
+    </div>
+
+    <div *ngIf="nomEntreprise" class="space-y-1">
+      <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Nom de l'entreprise</label>
+      <p class="text-slate-900 font-semibold text-xl uppercase">{{ nomEntreprise }}</p>
+    </div>
+
+    <div *ngIf="siteWeb" class="space-y-1">
+      <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Site web</label>
+      <p class="text-primary font-semibold text-xl">{{ siteWeb }}</p>
+    </div>
+
+    <div *ngIf="dateInscription" class="space-y-1">
+      <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Date d'inscription</label>
+      <p class="text-slate-900 font-semibold text-xl">{{ dateInscription }}</p>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<aside
+  *ngIf="sidebarService.isOpen"
+  class="h-screen w-64 fixed left-0 top-0 pt-16 bg-slate-50 flex flex-col p-4 space-y-2 text-sm z-30"
+>
+
+  <!-- Profil -->
+  <div class="mb-8 px-2 py-4">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold"
+           style="background: linear-gradient(135deg, #0040a1 0%, #0056d2 100%)">
+        {{ authService.getUser()?.nom?.charAt(0)?.toUpperCase() }}
+      </div>
+      <div>
+        <p class="font-black text-blue-700 text-lg leading-tight">{{ authService.getUser()?.nom }}</p>
+        <p class="text-slate-500 text-xs uppercase tracking-widest font-bold">{{ authService.getUser()?.role }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Admin -->
+  <nav class="flex-1 space-y-1" *ngIf="authService.getUser()?.role === 'admin'">
+    <a routerLink="/admin/recruteurs" routerLinkActive="bg-white text-blue-700 font-bold shadow-sm"
+       class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-lg hover:translate-x-1 transition-transform">
+      <span class="material-symbols-outlined">verified_user</span>
+      Validation recruteurs
+    </a>
+    <a routerLink="/admin/parametres" routerLinkActive="bg-white text-blue-700 font-bold shadow-sm"
+       class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-lg hover:translate-x-1 transition-transform">
+      <span class="material-symbols-outlined">settings</span>
+      Paramètres
+    </a>
+    <div class="mt-auto pt-4">
+      <a (click)="logout()"
+         class="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-lg cursor-pointer hover:translate-x-1 transition-transform">
+        <span class="material-symbols-outlined">logout</span>
+        Déconnexion
+      </a>
+    </div>
+  </nav>
+
+  <!-- Navigation Recruteur -->
+  <nav class="flex-1 space-y-1" *ngIf="authService.getUser()?.role === 'recruteur'">
+    <a routerLink="/recruteur/dashboard" routerLinkActive="bg-white text-blue-700 font-bold shadow-sm"
+       class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-lg hover:translate-x-1 transition-transform">
+      <span class="material-symbols-outlined">stars</span>
+      Dashboard
+    </a>
+    <a routerLink="/recruteur/mes-offres" routerLinkActive="bg-white text-blue-700 font-bold shadow-sm"
+       class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-lg hover:translate-x-1 transition-transform">
+      <span class="material-symbols-outlined">work</span>
+      Mes offres
+    </a>
+    <a routerLink="/recruteur/publier-offre" routerLinkActive="bg-white text-blue-700 font-bold shadow-sm"
+       class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-lg hover:translate-x-1 transition-transform">
+      <span class="material-symbols-outlined">add_circle</span>
+      Publier une offre
+    </a>
+    <a routerLink="/recruteur/profil" routerLinkActive="bg-white text-blue-700 font-bold shadow-sm"
+       class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-lg hover:translate-x-1 transition-transform">
+      <span class="material-symbols-outlined">person</span>
+      Mon profil
+    </a>
+    <div class="mt-auto pt-4">
+      <a (click)="logout()"
+         class="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-lg cursor-pointer hover:translate-x-1 transition-transform">
+        <span class="material-symbols-outlined">logout</span>
+        Déconnexion
+      </a>
+    </div>
+  </nav>
+
+  <!-- Navigation Candidat -->
+  <nav class="flex-1 space-y-1" *ngIf="authService.getUser()?.role === 'candidat'">
+    <a routerLink="/candidat/dashboard" routerLinkActive="bg-white text-blue-700 font-bold shadow-sm"
+       class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-lg hover:translate-x-1 transition-transform">
+      <span class="material-symbols-outlined">stars</span>
+      Dashboard
+    </a>
+    <a routerLink="/offres-internes" routerLinkActive="bg-white text-blue-700 font-bold shadow-sm"
+       class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-lg hover:translate-x-1 transition-transform">
+      <span class="material-symbols-outlined">business</span>
+      Offres internes
+    </a>
+    <a routerLink="/offres-externes" routerLinkActive="bg-white text-blue-700 font-bold shadow-sm"
+       class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-lg hover:translate-x-1 transition-transform">
+      <span class="material-symbols-outlined">public</span>
+      Offres externes
+    </a>
+    <a routerLink="/candidat/candidatures" routerLinkActive="bg-white text-blue-700 font-bold shadow-sm"
+       class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-lg hover:translate-x-1 transition-transform">
+      <span class="material-symbols-outlined">description</span>
+      Mes candidatures
+    </a>
+    <a routerLink="/candidat/profil" routerLinkActive="bg-white text-blue-700 font-bold shadow-sm"
+       class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-100 rounded-lg hover:translate-x-1 transition-transform">
+      <span class="material-symbols-outlined">person</span>
+      Mon profil
+    </a>
+    <div class="mt-auto pt-4">
+      <a (click)="logout()"
+         class="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-lg cursor-pointer hover:translate-x-1 transition-transform">
+        <span class="material-symbols-outlined">logout</span>
+        Déconnexion
+      </a>
+    </div>
+  </nav>
+
+</aside>
