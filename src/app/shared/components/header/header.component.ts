@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
 import { PageHeaderService } from '../../../services/page-header.service';
 
 @Component({
@@ -10,5 +11,13 @@ import { PageHeaderService } from '../../../services/page-header.service';
   styles: []
 })
 export class HeaderComponent {
-  constructor(public pageHeaderService: PageHeaderService) {}
+
+  constructor(
+    public pageHeaderService: PageHeaderService,
+    private location: Location
+  ) {}
+
+  goBack() {
+    this.location.back();
+  }
 }

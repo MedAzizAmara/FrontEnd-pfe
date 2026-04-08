@@ -6,7 +6,6 @@ import { SidebarService } from './services/sidebar.service';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { HeaderComponent } from './shared/components/header/header.component';
-
 @Component({
   selector: 'app-root',
   standalone: true,

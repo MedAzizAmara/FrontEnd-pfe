@@ -29,7 +29,6 @@ export class EnvoiMessageComponent implements OnInit {
 
   ngOnInit() {
     this.pageHeaderService.setHeader(
-      'Envoyer une invitation',
       'Rédigez et envoyez une invitation d\'entretien au candidat.'
     );
   }

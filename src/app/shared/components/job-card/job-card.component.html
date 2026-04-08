@@ -1,0 +1,43 @@
+<div class="bg-white border border-slate-100 rounded-xl p-6 md:p-8 shadow-sm hover:shadow-lg transition-all mb-8">
+
+  <!-- Top row -->
+  <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+
+    <!-- Logo -->
+    <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-slate-50 border border-slate-100">
+      <img class="w-full h-full object-cover" [src]="logoUrl" [alt]="company + ' logo'" />
+    </div>
+
+    <!-- Job Info -->
+    <div class="flex-grow space-y-2">
+      <h2 class="text-2xl font-bold text-slate-900 leading-tight">{{ title }}</h2>
+      <div class="flex flex-wrap gap-x-6 gap-y-2 text-slate-600">
+        <div class="flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-blue-600 text-xl">corporate_fare</span>
+          <span class="font-medium">{{ company }}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-blue-600 text-xl">mail</span>
+          <span>{{ email }}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-blue-600 text-xl">location_on</span>
+          <span>{{ location }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="border-slate-100 mt-6" />
+
+  <div class="flex justify-end gap-4 mt-6">
+    <button class="px-6 py-2.5 text-sm rounded-lg border border-blue-700 text-blue-700 font-bold hover:bg-blue-50 transition-colors">
+      Voir détails
+    </button>
+    <button class="px-6 py-2.5 text-sm rounded-lg bg-blue-700 text-white font-bold hover:bg-blue-800 transition-all shadow-md">
+      Postuler
+    </button>
+  </div>
+
+</div>

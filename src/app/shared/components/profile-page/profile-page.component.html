@@ -1,0 +1,51 @@
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="container-responsive">
+    <div class="bg-white rounded-lg shadow border border-gray-100">
+
+      <app-profile-header
+        [fullName]="fullName"
+        [jobTitle]="jobTitle"
+        [avatarUrl]="avatarUrl"
+        [isOwner]="isOwner"
+        [isEditing]="isEditing"
+        (editClicked)="onEditClicked()"
+        (saveClicked)="onSaveClicked()"
+        (jobTitleChanged)="onJobTitleChanged($event)"
+        (avatarChanged)="onAvatarChanged($event)"
+      />
+
+      <div class="grid-responsive-12 px-4 py-8 border-t border-gray-100">
+
+        <!-- Colonne gauche -->
+        <div class="space-y-6">
+          <app-personal-info
+            [isEditing]="isEditing"
+            [age]="age"
+            [permis]="permis"
+            [location]="location"
+            [email]="email"
+            [phone]="phone"
+          />
+          <app-experience-section
+            [isEditing]="isEditing"
+            [experiences]="experiences"
+          />
+          <app-education-section
+            [isEditing]="isEditing"
+            [educations]="educations"
+          />
+        </div>
+
+        <!-- Colonne droite -->
+        <div>
+          <app-skills-section
+            [isEditing]="isEditing"
+            [skillGroups]="skillGroups"
+            [languages]="languages"
+          />
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

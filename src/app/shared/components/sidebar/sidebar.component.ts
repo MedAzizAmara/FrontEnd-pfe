@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SidebarService } from '../../../services/sidebar.service';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -11,11 +10,7 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent {
-
-  constructor(
-    public sidebarService: SidebarService,
-    public authService: AuthService
-  ) {}
+  constructor(public authService: AuthService) {}
 
   logout(): void {
     this.authService.logout();

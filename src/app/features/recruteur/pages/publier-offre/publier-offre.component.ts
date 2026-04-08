@@ -28,10 +28,7 @@ export class PublierOffreComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.pageHeaderService.setHeader(
-      'Publier une offre',
-      'Remplissez les informations ci-dessous pour publier votre opportunité.'
-    );
+
   }
 
   onPublier(): void {

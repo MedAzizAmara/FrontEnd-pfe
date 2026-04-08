@@ -1,43 +1,38 @@
-<nav class="fixed top-0 w-full z-50 h-16 bg-white border-b border-slate-200 flex items-center px-6">
+<nav class="fixed top-0 w-full z-50 h-16 bg-white border-b border-slate-200 flex items-center px-4 lg:px-6">
   <div class="flex justify-between items-center w-full">
 
-    <!-- Left: Toggle + Logo -->
-    <div class="flex items-center gap-4">
-      <button (click)="toggleSidebar()" class="p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition-colors">
-        <span class="material-symbols-outlined">menu</span>
-      </button>
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white"
-             style="background: linear-gradient(135deg, #0040a1 0%, #0056d2 100%)">
-          <span class="material-symbols-outlined text-sm">work</span>
-        </div>
-        <span class="text-lg font-bold tracking-tight text-slate-900 font-headline">ToutaJob</span>
+    <!-- Left: Logo -->
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white"
+           style="background: linear-gradient(135deg, #0040a1 0%, #0056d2 100%)">
+        <span class="material-symbols-outlined text-sm">work</span>
       </div>
+      <span class="text-lg font-bold text-slate-900">ToutaJob</span>
     </div>
 
-    <!-- Center: Nav Links -->
-    <div class="hidden md:flex items-center gap-1 text-sm font-medium">
+    <!-- Center: Nav Links (caché sur mobile) -->
+    <div class="hidden lg:flex items-center gap-1 text-sm font-medium">
       <a routerLink="/"
-         class="text-slate-600 hover:text-blue-700 hover:bg-slate-100 px-4 py-2 rounded-lg transition-all flex items-center gap-2">
+         class="text-slate-600 hover:text-blue-700 hover:bg-slate-100 px-4 py-2 rounded-lg flex items-center gap-2">
         <span class="material-symbols-outlined text-sm">home</span>
         Accueil
       </a>
       <a routerLink="/offres"
-         class="text-slate-600 hover:text-blue-700 hover:bg-slate-100 px-4 py-2 rounded-lg transition-all">
+         class="text-slate-600 hover:text-blue-700 hover:bg-slate-100 px-4 py-2 rounded-lg">
         Offres Internes
       </a>
       <a routerLink="/offres-externes"
-         class="text-slate-600 hover:text-blue-700 hover:bg-slate-100 px-4 py-2 rounded-lg transition-all">
+         class="text-slate-600 hover:text-blue-700 hover:bg-slate-100 px-4 py-2 rounded-lg">
         Offres Externes
       </a>
     </div>
 
     <!-- Right: Auth Buttons -->
-    <div class="flex items-center gap-3">
-      <button class="px-4 py-2 text-slate-600 hover:text-blue-700 hover:bg-slate-100 rounded-lg transition-all text-sm font-medium">
+    <div class="flex items-center gap-2">
+      <button class="hidden lg:block px-4 py-2 text-slate-600 hover:text-blue-700 hover:bg-slate-100 rounded-lg text-sm font-medium">
         Inscription
       </button>
-      <button class="px-5 py-2 text-white rounded-lg font-bold text-sm transition-all"
+      <button class="px-4 py-2 text-white rounded-lg font-bold text-sm"
               style="background: linear-gradient(135deg, #0040a1 0%, #0056d2 100%)">
         Connexion
       </button>

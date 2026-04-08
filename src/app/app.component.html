@@ -2,12 +2,13 @@
 <app-sidebar *ngIf="authService.isLoggedIn()"></app-sidebar>
 
 <main
-  class="pt-16 min-h-screen transition-all duration-300"
+  class="pt-16 min-h-screen flex flex-col"
   [ngClass]="{
-    'ml-64': authService.isLoggedIn() && !sidebarService.isOpen,
-    'ml-20': authService.isLoggedIn() && sidebarService.isOpen,
+    'ml-64': authService.isLoggedIn(),
     'ml-0': !authService.isLoggedIn()
   }">
   <app-header></app-header>
-  <router-outlet></router-outlet>
+  <div class="flex-1 p-6">
+    <router-outlet></router-outlet>
+  </div>
 </main>

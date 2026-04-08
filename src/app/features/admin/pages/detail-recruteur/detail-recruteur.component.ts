@@ -1,22 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
-import { InfoSectionComponent } from './components/info-section/info-section.component';
-import { CompanyLogoComponent } from './components/company-logo/company-logo.component';
-import { PatentViewerComponent } from './components/patent-viewer/patent-viewer.component';
-import { StatusBadgeComponent } from './components/status-badge/status-badge.component';
 
 @Component({
   selector: 'app-detail-recruteur',
   standalone: true,
   imports: [
     CommonModule,
-    ProfileHeaderComponent,
-    InfoSectionComponent,
-    CompanyLogoComponent,
-    PatentViewerComponent,
-    StatusBadgeComponent,
   ],
   templateUrl: './detail-recruteur.component.html',
 })
@@ -35,6 +25,7 @@ export class DetailRecruteurComponent {
   dateInscription: string = '12 Octobre 2023';
   logoUrl: string = '';
   kbisImageUrl: string = 'https://lh3.googleusercontent.com/aida-public/AB6AXuCozu0papnD9XyC5KCHfDcSBrpzg_8Zyu78Bixnz6BfcJF-GNujOH6nXndXE7fdZLfohwkS4nKImXZ2dWQQuDLEmkABKA0mWUExb1hVbm7WEXVGufSITGhzp-FzShWcrBMOT-tJJjF-ASGA8aqkeRMRyNcEqQdDnZkCQAfHetrDIYUcFqqx4OWfB_ldHv30urrXK_Iq3Zh-txp-WJq-lOmuQ8_4vh-x5_gA06wLizWBVNwvNud1qTMlaCJRO3A4LaLeFrYJtW2UA9M';
+  pdfNom: string = '';
 
   constructor(private router: Router) {}
 

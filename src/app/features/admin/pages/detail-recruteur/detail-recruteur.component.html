@@ -1,54 +1,107 @@
-<div class="flex items-center justify-between mb-8">
-  <button
-    (click)="retourListe()"
-    class="flex items-center gap-2 text-primary font-bold hover:translate-x-[-4px] transition-transform">
-    <span class="material-symbols-outlined">arrow_back</span>
-    <span>RETOUR À LA LISTE</span>
-  </button>
-  <div class="flex items-center gap-4">
-    <app-status-badge [statut]="statut" />
-    <button class="bg-primary hover:bg-primary/90 text-white font-bold px-8 py-3 uppercase tracking-widest text-sm transition-all shadow-md rounded-lg">
-      Valider le compte
+<div class="max-w-4xl mx-auto bg-white border border-slate-200 rounded-xl p-12 space-y-16">
+
+  <!-- En-tête profil -->
+  <section class="flex flex-col items-center text-center space-y-6">
+    <img [src]="photoUrl" [alt]="nom" class="w-48 h-48 rounded-full object-cover border-4 border-white" />
+    <div class="space-y-2">
+      <h1 class="text-5xl font-extrabold tracking-tighter text-slate-900 uppercase">{{ nom }}</h1>
+      <p class="text-2xl font-medium text-primary uppercase tracking-wider">{{ titre }}</p>
+    </div>
+  </section>
+
+  <!-- Informations Personnelles -->
+  <div>
+    <h3 class="text-sm font-black uppercase text-slate-400 tracking-[0.2em] border-b border-slate-100 pb-2">
+      Informations Personnelles
+    </h3>
+    <div class="grid grid-cols-1 gap-8 mt-8">
+      <div *ngIf="age" class="space-y-1">
+        <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Âge</label>
+        <p class="text-slate-900 font-semibold text-xl">{{ age }}</p>
+      </div>
+      <div *ngIf="email" class="space-y-1">
+        <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Email professionnel</label>
+        <p class="text-slate-900 font-semibold text-xl">{{ email }}</p>
+      </div>
+      <div *ngIf="telephone" class="space-y-1">
+        <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Téléphone</label>
+        <p class="text-slate-900 font-semibold text-xl">{{ telephone }}</p>
+      </div>
+      <div *ngIf="localisation" class="space-y-1">
+        <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Localisation</label>
+        <p class="text-slate-900 font-semibold text-xl uppercase">{{ localisation }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Informations Entreprise -->
+  <div>
+    <h3 class="text-sm font-black uppercase text-slate-400 tracking-[0.2em] border-b border-slate-100 pb-2">
+      Informations Entreprise
+    </h3>
+    <div class="grid grid-cols-1 gap-8 mt-8">
+      <div *ngIf="nomEntreprise" class="space-y-1">
+        <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Nom de l'entreprise</label>
+        <p class="text-slate-900 font-semibold text-xl uppercase">{{ nomEntreprise }}</p>
+      </div>
+      <div *ngIf="siteWeb" class="space-y-1">
+        <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Site web</label>
+        <p class="text-primary font-semibold text-xl">{{ siteWeb }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logo de l'entreprise -->
+  <div class="space-y-8">
+    <h3 class="text-sm font-black uppercase text-slate-400 tracking-[0.2em] border-b border-slate-100 pb-2">
+      Logo de l'entreprise
+    </h3>
+    <div class="bg-slate-50 aspect-[21/9] flex items-center justify-center border border-slate-200 rounded-xl">
+      <img *ngIf="logoUrl" [src]="logoUrl" [alt]="nomEntreprise" class="max-h-full object-contain" />
+      <div *ngIf="!logoUrl" class="text-center">
+        <span class="material-symbols-outlined text-6xl text-primary mb-2">rocket_launch</span>
+        <p class="text-lg font-bold text-slate-900 uppercase tracking-widest">{{ nomEntreprise }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Historique -->
+  <div>
+    <h3 class="text-sm font-black uppercase text-slate-400 tracking-[0.2em] border-b border-slate-100 pb-2">
+      Historique
+    </h3>
+    <div class="mt-8 space-y-1">
+      <label class="text-[10px] font-bold uppercase text-slate-500 tracking-widest">Date d'inscription</label>
+      <p class="text-slate-900 font-semibold text-xl">{{ dateInscription }}</p>
+    </div>
+  </div>
+
+  <!-- Document KBIS -->
+  <div class="space-y-6">
+    <h3 class="text-sm font-black uppercase text-slate-400 tracking-[0.2em] border-b border-slate-100 pb-2">
+      Patente commerciale / KBIS
+    </h3>
+    <div *ngIf="kbisImageUrl" class="border border-slate-200 rounded-lg overflow-hidden">
+      <img [src]="kbisImageUrl" alt="Document Commercial" class="w-full object-cover" />
+    </div>
+    <div *ngIf="pdfNom" class="flex items-center gap-3 p-4 bg-slate-50 border border-slate-100 rounded-lg">
+      <span class="material-symbols-outlined text-primary">picture_as_pdf</span>
+      <span class="text-sm font-bold text-slate-600">{{ pdfNom }}</span>
+    </div>
+    <div *ngIf="!kbisImageUrl && !pdfNom" class="text-slate-400 text-sm italic">
+      Aucun document fourni.
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex justify-end gap-4 pt-4 border-t border-slate-100">
+    <button (click)="onRefuser()" class="px-6 py-2.5 text-sm rounded-lg border border-red-500 text-red-500 font-bold hover:bg-red-50 transition-colors">
+      Refuser le recruteur
+    </button>
+    <button (click)="onAccepter()" class="px-6 py-2.5 text-sm rounded-lg bg-green-600 text-white font-bold hover:bg-green-700 transition-colors">
+      Valider le recruteur
     </button>
   </div>
-</div>
-
-<div class="max-w-4xl mx-auto bg-white border border-slate-200 rounded-xl shadow-sm p-12 space-y-16">
-
-  <app-profile-header
-    [nom]="nom"
-    [titre]="titre"
-    [photoUrl]="photoUrl"
-  />
-
-  <app-info-section
-    titre="Informations Personnelles"
-    [age]="age"
-    [email]="email"
-    [telephone]="telephone"
-    [localisation]="localisation"
-  />
-
-  <app-info-section
-    titre="Informations Entreprise"
-    [nomEntreprise]="nomEntreprise"
-    [siteWeb]="siteWeb"
-  />
-
-  <app-company-logo
-    [nomEntreprise]="nomEntreprise"
-    [logoUrl]="logoUrl"
-  />
-
-  <app-info-section
-    titre="Historique"
-    [dateInscription]="dateInscription"
-  />
-
-  <app-patent-viewer
-    [imageUrl]="kbisImageUrl"
-    (accepter)="onAccepter()"
-    (refuser)="onRefuser()"
-  />
 
 </div>
+```

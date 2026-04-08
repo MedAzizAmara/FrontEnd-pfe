@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PageHeaderService } from '../../../../services/page-header.service';
-import { OffreCardComponent, Offre } from '../../../../shared/components/offre-card/offre-card.component';
-
+import { OffreCardComponent, Offre } from './components/offre-card/offre-card.component';
 @Component({
   selector: 'app-mes-offres',
   standalone: true,
@@ -59,13 +58,8 @@ export class MesOffresComponent implements OnInit {
 
   ngOnInit() {
     this.pageHeaderService.setHeader(
-      'Vos offres',
       'Gérez les offres que vous avez publiées.'
     );
-  }
-
-  onPublierOffre(): void {
-    this.router.navigate(['/recruteur/publier-offre']);
   }
 
   onVoirCandidats(offre: Offre): void {
