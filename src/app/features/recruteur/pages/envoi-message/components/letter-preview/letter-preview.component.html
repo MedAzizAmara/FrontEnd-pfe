@@ -1,51 +1,84 @@
-<div class="space-y-4">
-  <div class="flex items-center gap-2 px-2 text-slate-400">
-    <span class="material-symbols-outlined text-sm">visibility</span>
-    <span class="text-xs font-bold uppercase tracking-widest">Aperçu de la lettre</span>
+<div class="space-y-5">
+
+  <!-- Header -->
+  <div class="flex items-center gap-3 px-1">
+    <div class="w-10 h-10 rounded-2xl bg-primary-container flex items-center justify-center shrink-0">
+      <span class="material-symbols-outlined text-primary text-[18px]">visibility</span>
+    </div>
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-on-surface-variant">
+        Aperçu de la lettre
+      </p>
+      <p class="text-sm text-on-surface-variant mt-1">
+        Vérifiez le contenu avant l’envoi au candidat.
+      </p>
+    </div>
   </div>
 
-  <div class="bg-white border border-slate-200 p-8 shadow-sm relative">
-    <div class="absolute top-8 right-8 text-blue-100 opacity-20">
+  <!-- Card -->
+  <div
+    class="bg-surface-container-lowest border border-outline-variant/50 rounded-2xl p-6 md:p-8 relative overflow-hidden
+           shadow-[0_10px_30px_rgba(15,25,40,0.05)]"
+  >
+
+    <!-- Décor -->
+    <div class="absolute top-6 right-6 text-primary-fixed-dim opacity-20 pointer-events-none">
       <span class="material-symbols-outlined text-6xl">mail</span>
     </div>
 
-    <div class="prose prose-slate max-w-none">
-      <p class="text-slate-700 leading-relaxed">
-        Madame, Monsieur,<br/><br/>
+    <!-- Lettre -->
+    <div
+      class="relative bg-surface-container-low/40 border border-outline-variant/30 rounded-2xl
+             p-5 md:p-6 text-sm text-on-surface-variant leading-7 space-y-4"
+    >
+      <p class="text-on-surface">Madame, Monsieur,</p>
 
+      <p>
         Vous êtes invité(e) à un recrutement présentiel au sein de
-        <span class="font-bold text-blue-600">{{ societe || '[Société]' }}</span>
-        pour
-        <span class="font-bold text-slate-900">{{ poste || '[Intitulé du poste]' }}</span>.<br/><br/>
+        <span class="font-semibold text-primary">{{ societe || '[Société]' }}</span>
+        pour le poste de
+        <span class="font-semibold text-on-surface">{{ poste || '[Intitulé du poste]' }}</span>.
+      </p>
 
+      <p>
         La rencontre aura lieu le
-        <span class="font-bold text-slate-900">{{ date || '[Date]' }}</span>
+        <span class="font-semibold text-on-surface">{{ date || '[Date]' }}</span>
         à
-        <span class="font-bold text-slate-900">{{ heure || '[Heure]' }}</span>.<br/><br/>
+        <span class="font-semibold text-on-surface">{{ heure || '[Heure]' }}</span>.
+      </p>
 
+      <p>
         Nous vous prions de bien vouloir confirmer votre présence.
         Si cette date ne vous convient pas, veuillez nous contacter au
-        <span class="font-bold text-blue-600">{{ telephone || '[Téléphone]' }}</span>
+        <span class="font-semibold text-primary">{{ telephone || '[Téléphone]' }}</span>
         ou par email à
-        <span class="font-bold text-blue-600">{{ email || '[Email]' }}</span>.<br/><br/>
+        <span class="font-semibold text-primary">{{ email || '[Email]' }}</span>.
+      </p>
 
-        Cordialement,<br/><br/>
+      <p class="text-on-surface">Cordialement,</p>
 
-        <span class="font-bold text-slate-900">{{ nomRecruteur || '[Nom]' }}</span>
+      <p class="font-semibold text-on-surface">
+        {{ nomRecruteur || '[Nom]' }}
       </p>
     </div>
 
+    <!-- Bouton -->
     <button
       (click)="envoyer.emit()"
-      class="w-full py-4 bg-blue-600 text-white font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all mt-6 block"
+      class="w-full flex items-center justify-center gap-2 py-3.5 mt-6 rounded-xl
+             bg-primary text-on-primary text-sm font-semibold shadow-sm
+             hover:opacity-95 hover:shadow-md transition-all duration-200 active:scale-[0.98]"
     >
+      <span class="material-symbols-outlined text-[18px]">send</span>
       Envoyer l'invitation
     </button>
 
-    <div class="mt-8 pt-6 border-t border-slate-100">
-      <p class="text-xs text-slate-400 italic">
+    <!-- Note -->
+    <div class="mt-6 pt-5 border-t border-outline-variant/50">
+      <p class="text-xs text-on-surface-variant italic leading-6">
         L'invitation sera envoyée par e-mail et via une notification Push au candidat.
       </p>
     </div>
+
   </div>
 </div>

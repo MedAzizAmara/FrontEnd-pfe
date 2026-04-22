@@ -1,71 +1,108 @@
-<article class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
-  <div class="flex flex-col md:flex-row gap-6">
+<article
+  class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-5
+         hover:shadow-lg transition-all duration-300 group"
+>
 
-    <!-- Photo -->
-    <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 ring-1 ring-outline-variant/20">
+  <div class="flex flex-col md:flex-row gap-5">
+
+    <!-- Avatar -->
+    <div
+      class="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0
+             border border-outline-variant group-hover:scale-105 transition-transform"
+    >
       <img
         *ngIf="recruteur.photo"
         [src]="recruteur.photo"
         [alt]="recruteur.nom"
         class="w-full h-full object-cover"
       />
+
       <div
         *ngIf="!recruteur.photo"
-        class="w-full h-full bg-primary/20 flex items-center justify-center text-primary text-2xl font-bold"
+        class="w-full h-full bg-primary-container flex items-center justify-center
+               text-primary text-xl font-bold"
       >
         {{ recruteur.nom.charAt(0).toUpperCase() }}
       </div>
     </div>
 
-    <!-- Détails -->
-    <div class="flex-grow">
-      <div class="flex justify-between items-start mb-1">
-        <h3 class="text-xl font-bold font-headline text-on-surface">
+    <!-- Infos -->
+    <div class="flex-grow min-w-0">
+
+      <div class="flex justify-between items-start gap-3 mb-1">
+        <h3 class="font-headline text-base font-semibold text-on-surface truncate">
           {{ recruteur.nom }}
         </h3>
-        <span class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full">
-          Nouveau
+
+        <span
+          class="px-2.5 py-1 rounded-full text-xs font-semibold shrink-0
+                 bg-warning-container text-warning"
+        >
+          En attente
         </span>
       </div>
-      <p class="text-on-surface-variant font-medium">
-        {{ recruteur.poste }} @ {{ recruteur.entreprise }}
+
+      <p class="text-sm font-medium text-primary">
+        {{ recruteur.poste }}
+        <span class="text-on-surface-variant font-normal">
+          @ {{ recruteur.entreprise }}
+        </span>
       </p>
-      <div class="flex flex-wrap gap-4 mt-2 text-sm text-on-surface-variant">
-        <span class="flex items-center gap-1">
+
+      <div class="flex flex-wrap gap-4 mt-2 text-xs text-on-surface-variant">
+
+        <span class="flex items-center gap-1.5">
           <span class="material-symbols-outlined text-sm">mail</span>
           {{ recruteur.email }}
         </span>
-        <span class="flex items-center gap-1">
+
+        <span class="flex items-center gap-1.5">
           <span class="material-symbols-outlined text-sm">location_on</span>
           {{ recruteur.ville }}, {{ recruteur.pays }}
         </span>
-      </div>
-    </div>
 
+      </div>
+
+    </div>
   </div>
 
-  <!-- Boutons -->
-  <div class="mt-8 pt-6 border-t border-outline-variant/20 flex flex-wrap gap-3 justify-end">
+  <!-- Actions -->
+  <div
+    class="mt-5 pt-4 border-t border-outline-variant flex justify-end items-center gap-2 flex-wrap"
+  >
+
     <button
       (click)="voirDetails.emit(recruteur.id)"
-      class="px-5 py-2 border border-outline-variant text-on-surface hover:bg-surface-container-high rounded-lg font-semibold transition-all"
+      class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium
+             border border-outline-variant text-on-surface-variant
+             hover:bg-surface-container hover:text-on-surface
+             transition-all duration-200"
     >
-      Voir détails
+      <span class="material-symbols-outlined text-sm">visibility</span>
+      Voir
     </button>
+
     <button
       (click)="refuser.emit(recruteur.id)"
-      class="px-5 py-2 text-error hover:bg-error-container rounded-lg font-semibold flex items-center gap-2 transition-all"
+      class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium
+             border border-error text-error
+             hover:bg-error-container transition-all duration-200"
     >
-      <span class="material-symbols-outlined text-lg">close</span>
+      <span class="material-symbols-outlined text-sm">close</span>
       Refuser
     </button>
+
     <button
       (click)="accepter.emit(recruteur.id)"
-      class="px-6 py-2 bg-primary text-white rounded-lg font-bold flex items-center gap-2 shadow-lg hover:scale-105 active:scale-95 transition-all"
+      class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold
+             bg-primary text-on-primary shadow-sm
+             hover:shadow-md hover:scale-[1.02]
+             transition-all duration-200"
     >
-      <span class="material-symbols-outlined text-lg">check_circle</span>
+      <span class="material-symbols-outlined text-sm">check_circle</span>
       Accepter
     </button>
+
   </div>
 
 </article>

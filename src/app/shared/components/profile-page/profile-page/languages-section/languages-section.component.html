@@ -1,0 +1,48 @@
+<section class="rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 shadow-sm">
+  <div class="mb-5 flex items-center justify-between">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-on-surface-variant">Langues</p>
+      <h2 class="mt-1 font-headline text-xl font-bold text-on-surface">Langues</h2>
+    </div>
+
+    <button
+      *ngIf="isEditing"
+      type="button"
+      (click)="addLangue()"
+      class="rounded-xl border border-outline px-3 py-2 text-sm font-medium text-on-surface hover:bg-surface-container-lowest"
+    >
+      Ajouter
+    </button>
+  </div>
+
+  <div class="space-y-4">
+    <div *ngFor="let langue of langues; let i = index" class="border-b border-outline-variant/40 pb-3">
+      <div class="flex items-center gap-3">
+        <input
+          *ngIf="isEditing; else langueView"
+          type="text"
+          [ngModel]="langue"
+          (ngModelChange)="onLangueChange(i, $event)"
+          class="w-full border-0 bg-transparent px-0 py-1 text-sm text-on-surface outline-none"
+        />
+
+        <ng-template #langueView>
+          <p class="w-full text-sm text-on-surface">{{ langue }}</p>
+        </ng-template>
+
+        <button
+          *ngIf="isEditing"
+          type="button"
+          (click)="removeLangue(i)"
+          class="text-sm font-medium text-error"
+        >
+          Supprimer
+        </button>
+      </div>
+
+      <p *ngIf="errors[i]" class="mt-1 text-xs text-error">
+        {{ errors[i] }}
+      </p>
+    </div>
+  </div>
+</section>

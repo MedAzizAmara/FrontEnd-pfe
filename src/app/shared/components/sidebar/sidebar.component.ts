@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -10,9 +10,13 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent {
-  constructor(public authService: AuthService) {}
+  constructor(
+    public authService: AuthService,
+    private router: Router
+  ) {}
 
-  logout(): void {
-    this.authService.logout();
+  deconnecter(): void {
+    this.authService.deconnecter();
+    this.router.navigate(['/login']);
   }
 }

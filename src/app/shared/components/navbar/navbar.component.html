@@ -1,42 +1,172 @@
-<nav class="fixed top-0 w-full z-50 h-16 bg-white border-b border-slate-200 flex items-center px-4 lg:px-6">
-  <div class="flex justify-between items-center w-full">
+<nav class="fixed top-0 w-full z-50 h-16 bg-surface-container-lowest border-b border-outline-variant px-6">
+  <div class="max-w-7xl mx-auto h-full flex items-center justify-between">
 
-    <!-- Left: Logo -->
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white"
-           style="background: linear-gradient(135deg, #0040a1 0%, #0056d2 100%)">
-        <span class="material-symbols-outlined text-sm">work</span>
+    <a routerLink="/" class="flex items-center gap-2">
+      <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-on-primary text-[18px]">work</span>
       </div>
-      <span class="text-lg font-bold text-slate-900">ToutaJob</span>
-    </div>
+      <span class="font-headline text-lg font-bold text-on-surface">TalentFlow</span>
+    </a>
 
-    <!-- Center: Nav Links (caché sur mobile) -->
-    <div class="hidden lg:flex items-center gap-1 text-sm font-medium">
-      <a routerLink="/"
-         class="text-slate-600 hover:text-blue-700 hover:bg-slate-100 px-4 py-2 rounded-lg flex items-center gap-2">
-        <span class="material-symbols-outlined text-sm">home</span>
+    <div class="hidden lg:flex items-center gap-2">
+
+      <a
+        routerLink="/"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="bg-primary-container text-primary"
+        class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors"
+      >
+        <span class="material-symbols-outlined text-[18px]">home</span>
         Accueil
       </a>
-      <a routerLink="/offres"
-         class="text-slate-600 hover:text-blue-700 hover:bg-slate-100 px-4 py-2 rounded-lg">
-        Offres Internes
+
+      <a
+        routerLink="/offres"
+        routerLinkActive="bg-primary-container text-primary"
+        class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors"
+      >
+        <span class="material-symbols-outlined text-[18px]">search</span>
+        Offres
       </a>
-      <a routerLink="/offres-externes"
-         class="text-slate-600 hover:text-blue-700 hover:bg-slate-100 px-4 py-2 rounded-lg">
-        Offres Externes
+
+      <a
+        *ngIf="estConnecte"
+        routerLink="/dashboard"
+        routerLinkActive="bg-primary-container text-primary"
+        class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors"
+      >
+        <span class="material-symbols-outlined text-[18px]">dashboard</span>
+        Dashboard
+      </a>
+
+      <a
+        *ngIf="role === 'RECRUTEUR'"
+        routerLink="/mes-offres"
+        routerLinkActive="bg-primary-container text-primary"
+        class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container transition-colors"
+      >
+        <span class="material-symbols-outlined text-[18px]">description</span>
+        Mes offres
       </a>
     </div>
 
-    <!-- Right: Auth Buttons -->
     <div class="flex items-center gap-2">
-      <button class="hidden lg:block px-4 py-2 text-slate-600 hover:text-blue-700 hover:bg-slate-100 rounded-lg text-sm font-medium">
-        Inscription
-      </button>
-      <button class="px-4 py-2 text-white rounded-lg font-bold text-sm"
-              style="background: linear-gradient(135deg, #0040a1 0%, #0056d2 100%)">
-        Connexion
-      </button>
-    </div>
 
+      <a
+        *ngIf="!estConnecte"
+        routerLink="/auth"
+        class="px-4 py-2 rounded-lg bg-primary text-on-primary text-sm font-semibold hover:opacity-90 transition-opacity"
+      >
+        Connexion / Inscription
+      </a>
+
+
+      <ng-container *ngIf="estConnecte">
+        <div class="relative" id="menu-notif">
+          <button
+            (click)="toggleNotif()"
+            class="relative w-10 h-10 rounded-lg border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors"
+          >
+            <span class="material-symbols-outlined text-[18px]">notifications</span>
+            <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error"></span>
+          </button>
+
+          <div
+            *ngIf="notifOuverte"
+            class="absolute right-0 top-12 w-72 bg-surface-bright border border-outline-variant rounded-xl shadow-lg overflow-hidden"
+          >
+            <div class="px-4 py-3 border-b border-outline-variant">
+              <p class="text-sm font-semibold text-on-surface">Notifications</p>
+            </div>
+
+            <div *ngIf="role === 'CANDIDAT'" class="p-4">
+              <p class="text-sm font-medium text-on-surface">Nouvelles offres disponibles</p>
+              <p class="text-xs text-on-surface-variant">
+                Consultez les dernières offres publiées.
+              </p>
+            </div>
+
+            <div *ngIf="role === 'RECRUTEUR'" class="p-4">
+              <p class="text-sm font-medium text-on-surface">Nouveaux candidats</p>
+              <p class="text-xs text-on-surface-variant">
+                De nouvelles candidatures sont arrivées.
+              </p>
+            </div>
+
+            <div *ngIf="role === 'ADMIN'" class="p-4">
+              <p class="text-sm font-medium text-on-surface">Recruteurs en attente</p>
+              <p class="text-xs text-on-surface-variant">
+                Des comptes attendent votre validation.
+              </p>
+            </div>
+
+            <div class="px-4 py-3 border-t border-outline-variant">
+              <a routerLink="/notifications" class="text-sm font-medium text-primary hover:underline">
+                Voir toutes les notifications
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative" id="menu-avatar">
+          <button
+            (click)="toggleDropdown()"
+            class="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full border border-outline-variant hover:bg-surface-container transition-colors"
+          >
+            <div
+              class="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold"
+              [ngClass]="{
+                'bg-tertiary-container text-on-tertiary-container': role === 'CANDIDAT',
+                'bg-primary-container text-on-primary-container': role === 'RECRUTEUR',
+                'bg-warning-container text-on-warning-container': role === 'ADMIN'
+              }"
+            >
+              {{ initiales }}
+            </div>
+
+            <div class="hidden md:block text-left">
+              <p class="text-sm font-medium text-on-surface">{{ displayName }}</p>
+              <p class="text-xs text-on-surface-variant">{{ libelleRole }}</p>
+            </div>
+
+            <span class="material-symbols-outlined text-on-surface-variant text-[16px]">
+              expand_more
+            </span>
+          </button>
+
+          <div
+            *ngIf="dropdownOuvert"
+            class="absolute right-0 top-12 w-56 bg-surface-bright border border-outline-variant rounded-xl shadow-lg overflow-hidden"
+          >
+            <a
+              routerLink="/profil"
+              class="flex items-center gap-3 px-4 py-3 text-sm text-on-surface hover:bg-surface-container transition-colors"
+            >
+              <span class="material-symbols-outlined text-[18px]">person</span>
+              Mon profil
+            </a>
+
+            <a
+              *ngIf="role === 'RECRUTEUR'"
+              routerLink="/settings"
+              class="flex items-center gap-3 px-4 py-3 text-sm text-on-surface hover:bg-surface-container transition-colors"
+            >
+              <span class="material-symbols-outlined text-[18px]">settings</span>
+              Paramètres
+            </a>
+
+            <button
+              (click)="seDeconnecter()"
+              class="w-full flex items-center gap-3 px-4 py-3 text-sm text-error hover:bg-error-container transition-colors text-left"
+            >
+              <span class="material-symbols-outlined text-[18px]">logout</span>
+              Déconnexion
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
   </div>
 </nav>
+
+<div class="h-16"></div>

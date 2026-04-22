@@ -1,6 +1,5 @@
-<div class="px-6 md:px-10 max-w-5xl mx-auto pb-10">
-
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+<div class="px-4 sm:px-6 md:px-10 max-w-6xl mx-auto pb-12">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 xl:gap-10 items-start">
 
     <app-interview-form
       [societe]="societe"
@@ -8,7 +7,8 @@
       [telephone]="telephone"
       [email]="email"
       [nomRecruteur]="nomRecruteur"
-    />
+      (formChange)="onFormChange($event)"
+    ></app-interview-form>
 
     <app-letter-preview
       [societe]="societe"
@@ -19,7 +19,7 @@
       [email]="email"
       [nomRecruteur]="nomRecruteur"
       (envoyer)="onEnvoyer()"
-    />
+    ></app-letter-preview>
 
   </div>
 </div>

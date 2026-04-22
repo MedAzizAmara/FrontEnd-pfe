@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class PageHeaderService {
 
-  // Le titre de la page
-  titre: string = '';
+  stats: { label: string; valeur: number }[] = [];
+  titre = '';
 
-  // Le sous-titre de la page
-  sousTitre: string = '';
-
-  // On appelle cette méthode dans chaque page pour changer le titre
-  setHeader(titre: string, sousTitre: string = '') {
-    this.titre = titre;
-    this.sousTitre = sousTitre;
+  setStats(stats: { label: string; valeur: number }[]): void {
+    this.stats = stats;
   }
 
+  setHeader(titre: string): void {
+    this.titre = titre;
+    this.stats = [];
+  }
+
+  clear(): void {
+    this.stats = [];
+    this.titre = '';
+  }
 }

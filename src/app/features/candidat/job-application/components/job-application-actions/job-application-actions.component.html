@@ -1,0 +1,17 @@
+<div class="flex items-center justify-end gap-3">
+
+  <a routerLink="/candidat/offres"
+     class="px-4 py-2 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container transition-colors">
+    Annuler
+  </a>
+
+  <button
+    [disabled]="disabled || chargement"
+    (click)="submitClicked.emit()"
+    class="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold bg-primary text-on-primary hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+  >
+    <span *ngIf="chargement" class="material-symbols-outlined text-sm animate-spin">progress_activity</span>
+    {{ texteBouton }}
+  </button>
+
+</div>

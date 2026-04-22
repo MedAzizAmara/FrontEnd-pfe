@@ -1,0 +1,74 @@
+<div class="min-h-screen flex items-start justify-center bg-background py-10 px-4">
+  <article
+    class="w-full max-w-4xl bg-surface-container-lowest border border-outline-variant/40 rounded-3xl shadow-[0_20px_60px_rgba(15,25,40,0.08)] overflow-hidden"
+  >
+    <div class="px-8 py-6 border-b border-outline-variant/30 bg-surface-container-low">
+      <div class="mb-5">
+        <a
+          routerLink="/candidat/entretiens"
+          class="inline-flex items-center gap-2 rounded-2xl border border-outline bg-surface-container-lowest px-4 py-2 text-sm font-semibold text-on-surface transition hover:bg-surface-container"
+        >
+          <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+          Retour à la boîte de réception
+        </a>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary text-[22px]">mail</span>
+          </div>
+
+          <div>
+            <p class="text-sm font-semibold text-on-surface">
+              Message du recruteur
+            </p>
+            <p class="text-xs text-on-surface-variant">
+              {{ societe }}
+            </p>
+          </div>
+        </div>
+
+        <span class="text-xs text-on-surface-variant">
+          Aujourd’hui
+        </span>
+      </div>
+    </div>
+
+    <div class="px-10 py-10 md:px-14 md:py-12">
+      <div class="max-w-2xl mx-auto space-y-6 text-[15px] leading-8 text-on-surface-variant">
+
+        <p class="text-on-surface text-base">Madame, Monsieur,</p>
+
+        <p>
+          Vous êtes invité(e) à un entretien au sein de
+          <span class="font-semibold text-primary">{{ societe }}</span>
+          pour le poste de
+          <span class="font-semibold text-on-surface">{{ poste }}</span>.
+        </p>
+
+        <p>
+          La rencontre aura lieu le
+          <span class="font-semibold text-on-surface">{{ date }}</span>
+          à
+          <span class="font-semibold text-on-surface">{{ heure }}</span>.
+        </p>
+
+        <p>
+          Nous vous remercions de bien vouloir confirmer votre présence.
+          En cas d’indisponibilité, veuillez nous contacter au
+          <span class="font-semibold text-primary">{{ telephone }}</span>
+          ou par email à
+          <span class="font-semibold text-primary">{{ email }}</span>.
+        </p>
+
+        <p class="pt-4">Cordialement,</p>
+
+        <p class="font-semibold text-on-surface text-base">
+          {{ nomRecruteur }}
+        </p>
+
+      </div>
+    </div>
+  </article>
+</div>

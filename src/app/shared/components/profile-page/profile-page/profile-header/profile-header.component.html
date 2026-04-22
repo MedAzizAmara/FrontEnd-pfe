@@ -1,0 +1,59 @@
+<section class="rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 shadow-sm">
+  <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+    <div class="flex items-start gap-5">
+      <div class="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary text-2xl font-bold text-on-primary">
+        {{ initials }}
+      </div>
+
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-on-surface-variant">
+          Profil candidat
+        </p>
+
+        <h1 class="mt-2 font-headline text-3xl font-bold text-on-surface">
+          {{ personalInfo.nomComplet }}
+        </h1>
+
+        <p class="mt-1 text-base font-semibold text-primary">
+          {{ personalInfo.titre }}
+        </p>
+
+        <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-on-surface-variant">
+          <span class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">location_on</span>
+            {{ personalInfo.localisation }}
+          </span>
+
+          <span class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">mail</span>
+            {{ personalInfo.email }}
+          </span>
+
+          <span class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">call</span>
+            {{ personalInfo.telephone }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-3">
+      <button
+        type="button"
+        (click)="toggleEdit.emit()"
+        class="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-on-primary transition hover:opacity-90"
+      >
+        {{ isEditing ? 'Enregistrer' : 'Modifier' }}
+      </button>
+
+      <button
+        *ngIf="isEditing"
+        type="button"
+        (click)="cancelEdit.emit()"
+        class="inline-flex items-center justify-center rounded-xl border border-outline px-4 py-2.5 text-sm font-semibold text-on-surface transition hover:bg-surface-container-lowest"
+      >
+        Annuler
+      </button>
+    </div>
+  </div>
+</section>

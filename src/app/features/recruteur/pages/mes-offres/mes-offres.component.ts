@@ -1,76 +1,89 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PageHeaderService } from '../../../../services/page-header.service';
-import { OffreCardComponent, Offre } from './components/offre-card/offre-card.component';
+import { OffreCardComponent } from './components/offre-card/offre-card.component';
+import { OffreCardViewModel } from '../../../../models/offre-card-view.model';
+import { OffreService } from '../../../../services/offre.service';
+import { OffreEmploi } from '../../../../models/offre-emploi.model';
+import { AuthService } from '../../../../services/auth.service';
+
 @Component({
   selector: 'app-mes-offres',
   standalone: true,
   imports: [CommonModule, OffreCardComponent],
   templateUrl: './mes-offres.component.html',
-  styles: []
 })
 export class MesOffresComponent implements OnInit {
 
-  offres: Offre[] = [
-    {
-      id: 1,
-      titre: 'Senior Full-Stack Developer',
-      localisation: 'Paris, France',
-      candidatures: 18,
-      recommandes: 5,
-      statut: 'active',
-      icone: 'code'
-    },
-    {
-      id: 2,
-      titre: 'DevOps Engineer',
-      localisation: 'Tunis, Tunisie',
-      candidatures: 12,
-      recommandes: 3,
-      statut: 'active',
-      icone: 'cloud'
-    },
-    {
-      id: 3,
-      titre: 'UI/UX Designer',
-      localisation: 'Lyon, France',
-      candidatures: 7,
-      recommandes: 2,
-      statut: 'soon',
-      icone: 'brush'
-    },
-    {
-      id: 4,
-      titre: 'Data Scientist',
-      localisation: 'Casablanca, Maroc',
-      candidatures: 24,
-      recommandes: 0,
-      statut: 'expired',
-      icone: 'analytics'
-    },
-  ];
+  offres: OffreCardViewModel[] = [];
+  chargement = false;
+  erreur = '';
 
   constructor(
     private router: Router,
-    private pageHeaderService: PageHeaderService
+    private offreService: OffreService,
+    private authService: AuthService
   ) {}
 
-  ngOnInit() {
-    this.pageHeaderService.setHeader(
-      'Gérez les offres que vous avez publiées.'
-    );
+  ngOnInit(): void {
+    this.chargerMesOffres();
   }
 
-  onVoirCandidats(offre: Offre): void {
-    this.router.navigate(['/recruteur/dashboard'], { queryParams: { offreId: offre.id } });
+  chargerMesOffres(): void {
+    this.chargement = true;
+    this.erreur = '';
+
+    this.offreService.getToutesLesOffres().subscribe({
+      next: (offres: OffreEmploi[]) => {
+        const recruteurId = Number(this.authService.getUserId());
+
+        const mesOffres = offres.filter(offre => offre.recruteurId === recruteurId);
+
+        this.offres = mesOffres.map((offre) => ({
+          id: offre.id,
+          titre: offre.titre,
+          icone: 'work',
+          candidatures: 0,
+          recommandes: 0,
+          statut: offre.statut
+        }));
+
+        this.chargement = false;
+      },
+      error: (err) => {
+        console.error('Erreur chargement mes offres :', err);
+        this.erreur = err?.error?.message || 'Impossible de charger les offres.';
+        this.offres = [];
+        this.chargement = false;
+      }
+    });
   }
 
-  onModifier(offre: Offre): void {
-    this.router.navigate(['/recruteur/modifier-offre', offre.id]);
+  onVoirCandidats(offre: OffreCardViewModel): void {
+    if (offre.id != null) {
+      void this.router.navigate(['/recruteur/dashboard'], {
+        queryParams: { offreId: offre.id }
+      });
+    }
   }
 
-  onSupprimer(offre: Offre): void {
-    this.offres = this.offres.filter(o => o.id !== offre.id);
+  onModifier(offre: OffreCardViewModel): void {
+    if (offre.id != null) {
+      void this.router.navigate(['/recruteur/offres', offre.id, 'modifier']);
+    }
+  }
+
+  onSupprimer(offre: OffreCardViewModel): void {
+    if (offre.id == null) return;
+
+    this.offreService.supprimerOffre(offre.id).subscribe({
+      next: () => {
+        this.offres = this.offres.filter(item => item.id !== offre.id);
+      },
+      error: (err) => {
+        console.error('Erreur suppression offre :', err);
+        this.erreur = err?.error?.message || 'Impossible de supprimer l’offre.';
+      }
+    });
   }
 }

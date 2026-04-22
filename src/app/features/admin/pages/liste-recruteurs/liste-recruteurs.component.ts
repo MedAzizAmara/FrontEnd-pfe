@@ -42,10 +42,6 @@ export class ListeRecruteursComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.pageHeaderService.setHeader(
-      'Validation des recruteurs',
-      'Examinez et validez les inscriptions des recruteurs et leurs patentes commerciales.'
-    );
   }
 
   onAccepter(id: number) {

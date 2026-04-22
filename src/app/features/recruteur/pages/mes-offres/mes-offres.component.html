@@ -1,8 +1,7 @@
 <div>
-
   <div
     *ngIf="offres.length > 0; else vide"
-    class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-8"
+    class="flex flex-col items-center gap-6"
   >
     <app-offre-card
       *ngFor="let offre of offres"
@@ -10,16 +9,15 @@
       (voirCandidats)="onVoirCandidats($event)"
       (modifier)="onModifier($event)"
       (supprimer)="onSupprimer($event)"
-    >
-    </app-offre-card>
+      class="w-full max-w-3xl"
+    ></app-offre-card>
   </div>
 
   <ng-template #vide>
-    <div class="flex flex-col items-center justify-center py-24 text-center text-slate-500 gap-4">
+    <div class="flex flex-col items-center justify-center py-24 text-center text-on-surface-variant gap-4">
       <span class="material-symbols-outlined text-5xl">work_off</span>
       <p class="text-lg font-semibold">Aucune offre publiée</p>
       <p class="text-sm">Commencez par publier votre première offre.</p>
     </div>
   </ng-template>
-
 </div>

@@ -1,0 +1,81 @@
+<section class="space-y-4">
+  <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-on-surface-variant">
+        Opportunités
+      </p>
+      <h2 class="mt-1 font-headline text-2xl font-bold text-on-surface">
+        Offres recommandées
+      </h2>
+      <p class="mt-1 text-sm text-on-surface-variant">
+        Découvrez les opportunités les plus pertinentes selon votre profil.
+      </p>
+    </div>
+
+    <a
+      routerLink="/candidat/offres"
+      class="inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:opacity-80"
+    >
+      Voir tous
+      <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+    <article
+      *ngFor="let offre of offres"
+      class="flex h-full flex-col rounded-2xl border border-outline-variant/50 bg-surface-container-lowest p-5 shadow-sm transition hover:border-outline"
+    >
+      <div class="flex items-start justify-between gap-4">
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <h3 class="truncate text-base font-semibold text-on-surface">
+              {{ offre.titre }}
+            </h3>
+
+            <span
+              *ngIf="offre.recommandee"
+              class="rounded-full border border-primary/10 bg-primary-container px-2.5 py-1 text-[11px] font-semibold text-primary"
+            >
+              Recommandée
+            </span>
+          </div>
+
+          <p class="mt-1 text-sm font-medium text-on-surface-variant">
+            {{ offre.societe }}
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-4 space-y-2 text-sm text-on-surface-variant">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">location_on</span>
+          <span>{{ offre.localisation }}</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">work</span>
+          <span>{{ offre.contrat }}</span>
+        </div>
+      </div>
+
+      <div class="mt-5 rounded-xl border border-outline-variant/50 bg-surface-container-low px-4 py-3">
+        <p class="text-xs font-semibold uppercase tracking-[0.14em] text-on-surface-variant">
+          Pertinence
+        </p>
+        <p class="mt-1 text-sm text-on-surface">
+          Cette offre correspond à votre profil et à vos compétences principales.
+        </p>
+      </div>
+
+      <div class="mt-auto pt-5">
+        <a
+          [routerLink]="['/candidat/offres', offre.id]"
+          class="inline-flex w-full items-center justify-center rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-on-primary transition hover:opacity-90"
+        >
+          Voir l’offre
+        </a>
+      </div>
+    </article>
+  </div>
+</section>

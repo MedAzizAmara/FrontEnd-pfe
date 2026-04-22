@@ -1,24 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface ProfilRecruteur {
-  prenom: string;
-  nom: string;
-  email: string;
-  motDePasse: string;
-  telephone: string;
-  avatar: string | null;
-}
-
-interface Entreprise {
-  nom: string;
-  siteWeb: string;
-  adresse: string;
-  ville: string;
-  logo: string | null;
-  patente: string | null;
-}
+import { RecruteurService } from '../../../../services/recruteur.service';
+import { AuthService } from '../../../../services/auth.service';
+import { Recruteur } from '../../../../models/recruteur.model';
 
 @Component({
   selector: 'app-profil-recruteur',
@@ -31,58 +16,116 @@ interface Entreprise {
     }
   `]
 })
-export class ProfilRecruteurComponent {
+export class ProfilRecruteurComponent implements OnInit {
 
-  profil: ProfilRecruteur = {
-    prenom: 'Jean-Pierre',
-    nom: 'Beaumont',
-    email: 'jp.beaumont@curator-group.com',
-    motDePasse: 'password123',
-    telephone: '+216 71 000 000',
-    avatar: null
+  recruteurId: number | null = null;
+
+  profil: Recruteur = {
+    entreprise: '',
+    logoUrl: '',
+    siteWeb: '',
+    description: '',
+    statutValidation: '',
+    nom: '',
+    prenom: '',
+    email: '',
+    patente: undefined
   };
 
-  entreprise: Entreprise = {
-    nom: 'Precision Curator Group',
-    siteWeb: 'https://www.curator-group.com',
-    adresse: 'Avenue Habib Bourguiba',
-    ville: 'Tunis',
-    logo: null,
-    patente: 'patente_2024.pdf'
-  };
+  chargementInitial = false;
+  chargement = false;
+  erreur = '';
+  succes = '';
 
-  onAvatarChange(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.profil.avatar = reader.result as string;
-      };
-      reader.readAsDataURL(file);
+  constructor(
+    private recruteurService: RecruteurService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    const userId = this.authService.getUserId();
+
+    if (!userId) {
+      this.erreur = 'Utilisateur non connecté.';
+      return;
     }
+
+    this.recruteurId = Number(userId);
+    this.chargerProfil();
   }
 
-  onLogoChange(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.entreprise.logo = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-    }
-  }
+  chargerProfil(): void {
+    if (!this.recruteurId) return;
 
-  onPatenteChange(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.entreprise.patente = file.name;
-    }
+    this.chargementInitial = true;
+    this.erreur = '';
+
+    this.recruteurService.getProfil(this.recruteurId).subscribe({
+      next: (recruteur) => {
+        this.profil = {
+          id: recruteur.id,
+          entreprise: recruteur.entreprise || '',
+          logoUrl: recruteur.logoUrl || '',
+          siteWeb: recruteur.siteWeb || '',
+          description: recruteur.description || '',
+          statutValidation: recruteur.statutValidation || '',
+          nom: recruteur.nom || '',
+          prenom: recruteur.prenom || '',
+          email: recruteur.email || '',
+          patente: recruteur.patente
+        };
+        this.chargementInitial = false;
+      },
+      error: (err) => {
+        console.error('Erreur chargement profil recruteur :', err);
+        this.erreur = err?.error?.message || 'Impossible de charger le profil recruteur.';
+        this.chargementInitial = false;
+      }
+    });
   }
 
   onSauvegarder(): void {
-    console.log('Profil sauvegardé :', this.profil);
-    console.log('Entreprise sauvegardée :', this.entreprise);
-    // Appel API ici
+    this.erreur = '';
+    this.succes = '';
+
+    if (!this.recruteurId) {
+      this.erreur = 'Identifiant recruteur invalide.';
+      return;
+    }
+
+    if (!this.profil.entreprise?.trim()) {
+      this.erreur = 'Le nom de l’entreprise est obligatoire.';
+      return;
+    }
+
+    const payload: Recruteur = {
+      entreprise: this.profil.entreprise,
+      logoUrl: this.profil.logoUrl || '',
+      siteWeb: this.profil.siteWeb || '',
+      description: this.profil.description || ''
+    };
+
+    this.chargement = true;
+
+    this.recruteurService.modifierProfil(this.recruteurId, payload).subscribe({
+      next: (updated) => {
+        this.profil = {
+          ...this.profil,
+          entreprise: updated.entreprise || '',
+          logoUrl: updated.logoUrl || '',
+          siteWeb: updated.siteWeb || '',
+          description: updated.description || '',
+          statutValidation: updated.statutValidation || this.profil.statutValidation,
+          patente: updated.patente || this.profil.patente
+        };
+        this.succes = 'Profil recruteur mis à jour avec succès.';
+        this.chargement = false;
+      },
+      error: (err) => {
+        console.error('Erreur mise à jour profil recruteur :', err);
+        this.erreur = err?.error?.message || 'Impossible de sauvegarder les modifications.';
+        this.chargement = false;
+      }
+    });
   }
 }

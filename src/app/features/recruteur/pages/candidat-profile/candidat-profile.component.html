@@ -1,0 +1,53 @@
+<div class="min-h-screen bg-background px-4 py-8 md:px-8 lg:px-10">
+  <div class="mx-auto max-w-7xl">
+
+    <div *ngIf="chargement" class="rounded-2xl border border-outline-variant/50 bg-surface-container-lowest p-6 text-sm text-on-surface-variant shadow-sm">
+      Chargement du profil candidat...
+    </div>
+
+    <div *ngIf="erreur" class="rounded-2xl border border-error bg-error-container px-4 py-3 text-sm text-error shadow-sm">
+      {{ erreur }}
+    </div>
+
+    <div
+      *ngIf="!chargement && !erreur && candidat"
+      class="rounded-2xl border border-outline-variant/50 bg-surface-container-lowest p-6 shadow-sm md:p-8 lg:p-10"
+    >
+      <div class="space-y-8">
+
+        <app-profile-header
+          [personalInfo]="mappedPersonalInfo"
+          [isEditing]="false">
+        </app-profile-header>
+
+        <div class="grid grid-cols-1 gap-8 xl:grid-cols-3">
+          <div class="space-y-6 xl:col-span-1">
+            <app-personal-info
+              [personalInfo]="mappedPersonalInfo"
+              [isEditing]="false">
+            </app-personal-info>
+
+            <app-skills-section
+              [competences]="candidat.competences">
+            </app-skills-section>
+
+            <app-languages-section
+              [langues]="candidat.langues">
+            </app-languages-section>
+          </div>
+
+          <div class="space-y-6 xl:col-span-2">
+            <app-experience-section
+              [experiences]="candidat.experiences">
+            </app-experience-section>
+
+            <app-education-section
+              [formations]="candidat.formations">
+            </app-education-section>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

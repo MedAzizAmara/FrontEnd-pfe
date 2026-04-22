@@ -1,14 +1,28 @@
 <app-navbar></app-navbar>
-<app-sidebar *ngIf="authService.isLoggedIn()"></app-sidebar>
+
+<app-sidebar *ngIf="authService.estConnecte()"></app-sidebar>
 
 <main
-  class="pt-16 min-h-screen flex flex-col"
+  class="min-h-screen flex flex-col transition-all duration-300"
   [ngClass]="{
-    'ml-64': authService.isLoggedIn(),
-    'ml-0': !authService.isLoggedIn()
-  }">
-  <app-header></app-header>
-  <div class="flex-1 p-6">
-    <router-outlet></router-outlet>
+    'lg:ml-64': authService.estConnecte(),
+    'ml-0': !authService.estConnecte(),
+    'pt-16': true
+  }"
+>
+
+
+  <app-header *ngIf="authService.estConnecte()"></app-header>
+
+  <!-- Content -->
+  <div class="flex-1 flex justify-center px-3 sm:px-5 lg:px-6 py-5">
+
+    <div class="w-full max-w-5xl xl:max-w-6xl">
+
+      <router-outlet></router-outlet>
+
+    </div>
+
   </div>
+
 </main>

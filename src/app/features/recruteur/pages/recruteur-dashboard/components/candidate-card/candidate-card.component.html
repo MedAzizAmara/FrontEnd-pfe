@@ -1,63 +1,100 @@
-<article class="bg-white border border-slate-200 rounded-lg p-5 mt-15 pb-14 flex items-start">
+<!-- candidate-card.component.html -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5
+                flex items-start gap-5 hover:shadow-md transition-all duration-200">
 
-  <div class="w-12 text-slate-300 font-black text-2xl pl-2">
-    {{ rankFormatted }}
+  <!-- Rang -->
+  <div class="w-10 shrink-0 flex items-center justify-center">
+    <span class="font-headline text-2xl font-extrabold text-outline">
+      {{ rankFormatted }}
+    </span>
   </div>
 
-  <div class="h-16 w-16 shrink-0 rounded-full overflow-hidden border-2 border-slate-100 mr-6 ml-2">
-    <img [src]="candidate.photoUrl" [alt]="candidate.name" class="h-full w-full object-cover" />
+  <!-- Avatar -->
+  <div class="h-14 w-14 shrink-0 rounded-lg overflow-hidden border border-outline-variant">
+    <img
+      [src]="candidate.candidat.avatarUrl"
+      [alt]="candidate.candidat.prenom + ' ' + candidate.candidat.nom"
+      class="h-full w-full object-cover"
+    />
   </div>
 
-  <div class="flex-1 min-w-0 flex flex-col gap-1.5">
-    <div class="flex items-center gap-2">
-      <h3 class="text-base font-bold text-slate-900 truncate">{{ candidate.name }}</h3>
-      <span class="text-xs text-slate-500 font-medium">— {{ candidate.title }}</span>
-      <span class="text-xs text-slate-400">{{ candidate.location }}</span>
+  <!-- Infos principales -->
+  <div class="flex-1 min-w-0 flex flex-col gap-1">
+
+    <h3 class="font-headline text-base font-semibold text-on-surface truncate">
+      {{ candidate.candidat.prenom }} {{ candidate.candidat.nom }}
+    </h3>
+
+    <span class="text-sm font-medium text-primary">
+      {{ candidate.candidat.jobTitle }}
+    </span>
+
+    <div class="flex items-center gap-1 text-xs text-on-surface-variant">
+      <span class="material-symbols-outlined text-sm">location_on</span>
+      {{ candidate.candidat.personalInfo.localisation }}
     </div>
-    <div class="flex items-center gap-4 text-[11px] text-slate-500">
+
+    <div class="flex flex-wrap items-center gap-4 text-xs text-on-surface-variant mt-1">
       <span class="flex items-center gap-1">
-        <span class="material-symbols-outlined text-xs">mail</span>
-        {{ candidate.email }}
+        <span class="material-symbols-outlined text-sm">mail</span>
+        {{ candidate.candidat.personalInfo.email }}
       </span>
       <span class="flex items-center gap-1">
-        <span class="material-symbols-outlined text-xs">call</span>
-        {{ candidate.phone }}
-      </span>
-      <span class="flex items-center gap-1">
-        <span class="material-symbols-outlined text-xs">link</span>
-        {{ candidate.linkedin }}
+        <span class="material-symbols-outlined text-sm">call</span>
+        {{ candidate.candidat.personalInfo.telephone }}
       </span>
     </div>
+
   </div>
 
-  <div class="flex flex-col items-center gap-4 ml-8">
+  <!-- Score + Actions -->
+  <div class="flex flex-col items-center gap-4 shrink-0">
+
+    <!-- Cercle score -->
     <div class="relative flex items-center justify-center w-14 h-14">
       <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
-        <path class="text-slate-100"
-              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-              fill="none" stroke="currentColor" stroke-width="3"/>
+        <path
+          class="text-outline-variant"
+          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+          fill="none" stroke="currentColor" stroke-width="3"/>
         <path
           [attr.stroke]="scoreColor"
           [attr.stroke-dasharray]="score + ', 100'"
           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
           fill="none" stroke-width="3" stroke-linecap="round"/>
       </svg>
-      <span class="absolute text-[11px] font-black text-slate-700">{{ candidate.score }}%</span>
+      <span class="absolute text-xs font-bold text-on-surface">{{ score }}%</span>
     </div>
 
-    <div class="flex items-center gap-3 shrink-0 mt-4">
-      <button (click)="onInvite()"
-              class="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-lg">
-        Invite Candidate
+    <!-- Boutons -->
+    <div class="flex items-center gap-2">
+
+      <button
+        [routerLink]="['/recruteur/envoi-message']"
+        class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold
+         bg-primary text-on-primary hover:opacity-90 transition-opacity">
+
+        <span class="material-symbols-outlined text-sm">send</span>
+        Inviter
       </button>
-      <button (click)="onViewProfile()"
-              class="px-4 py-2 border border-indigo-600 text-indigo-600 text-xs font-bold rounded-lg">
-        Voir Profil
+      <button
+        (click)="onViewProfile()"
+        class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold
+               border border-outline-variant text-on-surface-variant
+               hover:bg-surface-container transition-colors">
+        <span class="material-symbols-outlined text-sm">person</span>
+        Voir profil
       </button>
-      <button (click)="onRefuse()"
-              class="px-4 py-2 border border-red-500 text-red-500 text-xs font-bold rounded-lg">
+
+      <button
+        (click)="onRefuse()"
+        class="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold
+               border border-error text-error
+               hover:bg-error-container transition-colors">
+        <span class="material-symbols-outlined text-sm">close</span>
         Refuser
       </button>
+
     </div>
   </div>
 

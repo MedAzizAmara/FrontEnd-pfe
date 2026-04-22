@@ -1,1 +1,145 @@
-<p>home works!</p>
+<div class="min-h-screen flex flex-col bg-[#111415] text-[#e1e3e4]">
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <main class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+
+    <!-- Image de fond -->
+    <div class="absolute inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80"
+        alt="Bureau moderne Tunis"
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(17,20,21,0.55) 0%, rgba(17,20,21,0.88) 100%);"></div>
+    </div>
+
+    <!-- Contenu centré -->
+    <div class="relative z-10 max-w-4xl px-6 text-center flex flex-col items-center">
+
+      <!-- Badge -->
+      <div class="mb-6 inline-flex items-center px-3 py-1 rounded-full border border-[#b2c5ff]/20 bg-[#b2c5ff]/10 backdrop-blur-sm">
+        <span class="text-[#b2c5ff] text-xs font-bold tracking-widest uppercase">Tunisia's Premium Job Board</span>
+      </div>
+
+      <!-- Titre -->
+      <h1 class="font-headline text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+        Trouvez l'emploi qui<br>vous correspond
+        <span class="text-[#b2c5ff]"> en Tunisie</span>
+      </h1>
+
+      <!-- Description -->
+      <p class="text-xl text-[#c3c6d6] font-light mb-12 max-w-2xl leading-relaxed">
+        Connectez-vous avec les entreprises les plus innovantes et propulsez votre carrière grâce au matching IA.
+      </p>
+
+      <!-- Boutons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a routerLink="/register"
+           class="w-full sm:w-auto px-10 py-4 rounded-full font-bold text-lg text-white flex items-center justify-center gap-2 transition-all hover:opacity-90"
+           style="background: linear-gradient(135deg, #0056d2, #b2c5ff);">
+          S'inscrire
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </a>
+        <a routerLink="/login"
+           class="w-full sm:w-auto px-10 py-4 rounded-full border-2 border-white/20 backdrop-blur-md text-white font-bold text-lg hover:bg-white/10 transition-all">
+          Se connecter
+        </a>
+        <a routerLink="/candidat/offres"
+           class="w-full sm:w-auto px-10 py-4 rounded-full border-2 border-[#b2c5ff]/30 text-[#b2c5ff] font-bold text-lg hover:bg-[#b2c5ff]/10 transition-all flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-base">search</span>
+          Voir les offres
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="mt-20 flex flex-wrap justify-center gap-8 md:gap-16 opacity-70">
+        <div class="text-center">
+          <div class="text-3xl font-bold text-white">500+</div>
+          <div class="text-xs uppercase tracking-widest text-[#c3c6d6]">Offres actives</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-white">12k</div>
+          <div class="text-xs uppercase tracking-widest text-[#c3c6d6]">Candidats</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-bold text-white">200+</div>
+          <div class="text-xs uppercase tracking-widest text-[#c3c6d6]">Entreprises</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
+      <span class="material-symbols-outlined text-white text-3xl">keyboard_double_arrow_down</span>
+    </div>
+
+  </main>
+
+  <!-- ── SECTION SLOGANS ───────────────────────────────────── -->
+  <section class="bg-[#191c1d] py-24 px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <div class="flex flex-col items-center text-center p-8 rounded-2xl bg-[#0c0f10] hover:bg-[#1d2021] transition-colors">
+          <div class="w-16 h-16 rounded-2xl bg-[#b2c5ff]/10 flex items-center justify-center mb-6">
+            <span class="material-symbols-outlined text-[#b2c5ff] text-3xl">handshake</span>
+          </div>
+          <h3 class="font-headline text-xl font-bold text-white mb-4">Connectez talents et opportunités</h3>
+          <p class="text-[#c3c6d6] leading-relaxed text-sm">
+            Nous créons le pont parfait entre les recruteurs visionnaires et les professionnels talentueux en Tunisie.
+          </p>
+        </div>
+
+        <div class="flex flex-col items-center text-center p-8 rounded-2xl bg-[#0c0f10] hover:bg-[#1d2021] transition-colors">
+          <div class="w-16 h-16 rounded-2xl bg-[#4edea3]/10 flex items-center justify-center mb-6">
+            <span class="material-symbols-outlined text-[#4edea3] text-3xl">verified_user</span>
+          </div>
+          <h3 class="font-headline text-xl font-bold text-white mb-4">Offres vérifiées, recruteurs sérieux</h3>
+          <p class="text-[#c3c6d6] leading-relaxed text-sm">
+            Chaque annonce est soigneusement filtrée pour garantir une transparence totale et une fiabilité maximale.
+          </p>
+        </div>
+
+        <div class="flex flex-col items-center text-center p-8 rounded-2xl bg-[#0c0f10] hover:bg-[#1d2021] transition-colors">
+          <div class="w-16 h-16 rounded-2xl bg-[#bac7de]/10 flex items-center justify-center mb-6">
+            <span class="material-symbols-outlined text-[#bac7de] text-3xl">rocket_launch</span>
+          </div>
+          <h3 class="font-headline text-xl font-bold text-white mb-4">L'emploi tunisien, réinventé</h3>
+          <p class="text-[#c3c6d6] leading-relaxed text-sm">
+            Une plateforme IA conçue pour répondre aux défis spécifiques du marché du travail local.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="bg-black py-12 px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+
+      <div class="flex flex-col items-center md:items-start gap-2">
+        <span class="font-headline text-lg font-bold text-white">ToutaJob</span>
+        <p class="text-xs text-slate-400">© {{ annee }} ToutaJob. Tous droits réservés.</p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-6">
+        <a href="#" class="text-xs text-slate-500 hover:text-slate-300 transition-colors">Politique de confidentialité</a>
+        <a href="#" class="text-xs text-slate-500 hover:text-slate-300 transition-colors">Conditions d'utilisation</a>
+        <a href="#" class="text-xs text-slate-500 hover:text-slate-300 transition-colors">Contact</a>
+        <a href="#" class="text-xs text-slate-500 hover:text-slate-300 transition-colors">À propos</a>
+      </div>
+
+      <div class="flex gap-3">
+        <div class="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center hover:bg-[#0056d2] transition-colors cursor-pointer">
+          <span class="material-symbols-outlined text-sm text-white">public</span>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center hover:bg-[#0056d2] transition-colors cursor-pointer">
+          <span class="material-symbols-outlined text-sm text-white">mail</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+</div>

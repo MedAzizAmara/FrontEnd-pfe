@@ -1,0 +1,113 @@
+<section class="rounded-2xl border border-outline-variant/50 bg-surface-container-low p-6 shadow-sm">
+  <div class="mb-5">
+    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-on-surface-variant">
+      Informations
+    </p>
+    <h2 class="mt-1 font-headline text-xl font-bold text-on-surface">
+      Informations personnelles
+    </h2>
+  </div>
+
+  <div class="space-y-4">
+    <div class="border-b border-outline-variant/40 pb-3">
+      <p class="text-xs font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Nom complet</p>
+      <p class="mt-1 text-sm text-on-surface">{{ personalInfo.nomComplet }}</p>
+    </div>
+
+    <div class="border-b border-outline-variant/40 pb-3">
+      <p class="text-xs font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Titre professionnel</p>
+      <p class="mt-1 text-sm text-on-surface">{{ personalInfo.titre }}</p>
+    </div>
+
+    <div class="border-b border-outline-variant/40 pb-3">
+      <label class="text-xs font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Email</label>
+      <input
+        *ngIf="isEditing; else emailView"
+        type="email"
+        [ngModel]="personalInfo.email"
+        (ngModelChange)="onFieldChange('email', $event)"
+        class="mt-2 w-full border-0 bg-transparent px-0 py-1 text-sm text-on-surface outline-none"
+      />
+      <ng-template #emailView><p class="mt-1 text-sm text-on-surface">{{ personalInfo.email }}</p></ng-template>
+      <p *ngIf="errors.email" class="mt-1 text-xs text-error">{{ errors.email }}</p>
+    </div>
+
+    <div class="border-b border-outline-variant/40 pb-3">
+      <label class="text-xs font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Téléphone</label>
+      <input
+        *ngIf="isEditing; else telView"
+        type="text"
+        [ngModel]="personalInfo.telephone"
+        (ngModelChange)="onFieldChange('telephone', $event)"
+        class="mt-2 w-full border-0 bg-transparent px-0 py-1 text-sm text-on-surface outline-none"
+      />
+      <ng-template #telView><p class="mt-1 text-sm text-on-surface">{{ personalInfo.telephone }}</p></ng-template>
+      <p *ngIf="errors.telephone" class="mt-1 text-xs text-error">{{ errors.telephone }}</p>
+    </div>
+
+    <div class="border-b border-outline-variant/40 pb-3">
+      <label class="text-xs font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Localisation</label>
+      <input
+        *ngIf="isEditing; else locView"
+        type="text"
+        [ngModel]="personalInfo.localisation"
+        (ngModelChange)="onFieldChange('localisation', $event)"
+        class="mt-2 w-full border-0 bg-transparent px-0 py-1 text-sm text-on-surface outline-none"
+      />
+      <ng-template #locView><p class="mt-1 text-sm text-on-surface">{{ personalInfo.localisation }}</p></ng-template>
+      <p *ngIf="errors.localisation" class="mt-1 text-xs text-error">{{ errors.localisation }}</p>
+    </div>
+
+    <div class="border-b border-outline-variant/40 pb-3">
+      <label class="text-xs font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Date de naissance</label>
+      <input
+        *ngIf="isEditing; else dateView"
+        type="date"
+        [ngModel]="personalInfo.dateNaissance"
+        (ngModelChange)="onFieldChange('dateNaissance', $event)"
+        class="mt-2 w-full border-0 bg-transparent px-0 py-1 text-sm text-on-surface outline-none"
+      />
+      <ng-template #dateView><p class="mt-1 text-sm text-on-surface">{{ personalInfo.dateNaissance }}</p></ng-template>
+      <p *ngIf="errors.dateNaissance" class="mt-1 text-xs text-error">{{ errors.dateNaissance }}</p>
+    </div>
+
+    <div class="border-b border-outline-variant/40 pb-3">
+      <label class="text-xs font-semibold uppercase tracking-[0.14em] text-on-surface-variant">GitHub</label>
+      <input
+        *ngIf="isEditing; else githubView"
+        type="text"
+        [ngModel]="personalInfo.github"
+        (ngModelChange)="onFieldChange('github', $event)"
+        class="mt-2 w-full border-0 bg-transparent px-0 py-1 text-sm text-on-surface outline-none"
+      />
+      <ng-template #githubView><p class="mt-1 text-sm text-on-surface">{{ personalInfo.github }}</p></ng-template>
+      <p *ngIf="errors.github" class="mt-1 text-xs text-error">{{ errors.github }}</p>
+    </div>
+
+    <div class="border-b border-outline-variant/40 pb-3">
+      <label class="text-xs font-semibold uppercase tracking-[0.14em] text-on-surface-variant">LinkedIn</label>
+      <input
+        *ngIf="isEditing; else linkedinView"
+        type="text"
+        [ngModel]="personalInfo.linkedin"
+        (ngModelChange)="onFieldChange('linkedin', $event)"
+        class="mt-2 w-full border-0 bg-transparent px-0 py-1 text-sm text-on-surface outline-none"
+      />
+      <ng-template #linkedinView><p class="mt-1 text-sm text-on-surface">{{ personalInfo.linkedin }}</p></ng-template>
+      <p *ngIf="errors.linkedin" class="mt-1 text-xs text-error">{{ errors.linkedin }}</p>
+    </div>
+
+    <div class="pb-1">
+      <label class="text-xs font-semibold uppercase tracking-[0.14em] text-on-surface-variant">Portfolio</label>
+      <input
+        *ngIf="isEditing; else portfolioView"
+        type="text"
+        [ngModel]="personalInfo.portfolio"
+        (ngModelChange)="onFieldChange('portfolio', $event)"
+        class="mt-2 w-full border-0 bg-transparent px-0 py-1 text-sm text-on-surface outline-none"
+      />
+      <ng-template #portfolioView><p class="mt-1 text-sm text-on-surface">{{ personalInfo.portfolio }}</p></ng-template>
+      <p *ngIf="errors.portfolio" class="mt-1 text-xs text-error">{{ errors.portfolio }}</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,217 @@
+<div class="px-4 sm:px-6 lg:px-10 pt-8 pb-14 max-w-7xl mx-auto space-y-14">
+
+  <div *ngIf="erreur" class="rounded-xl bg-error-container px-4 py-3 text-sm text-error">
+    {{ erreur }}
+  </div>
+
+  <!-- Offres publiées -->
+  <section class="space-y-7">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+          Recrutement
+        </p>
+        <h2 class="mt-1 text-2xl md:text-3xl font-headline font-bold text-on-surface tracking-tight">
+          Mes offres
+        </h2>
+        <p class="mt-2 text-sm text-on-surface-variant">
+          Suivez vos offres publiées et accédez rapidement aux candidatures.
+        </p>
+      </div>
+
+      <a
+        routerLink="/recruteur/mes-offres"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-primary
+               hover:gap-3 transition-all"
+      >
+        Voir toutes mes offres
+        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+      </a>
+    </div>
+
+    <div *ngIf="chargementOffres" class="text-sm text-on-surface-variant">
+      Chargement des offres...
+    </div>
+
+    <div *ngIf="!chargementOffres" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+      <div
+        *ngFor="let offre of offres"
+        class="bg-surface-container-lowest border border-outline-variant/40 rounded-3xl p-6
+               shadow-[0_10px_30px_rgba(15,25,40,0.05)] hover:shadow-[0_14px_40px_rgba(15,25,40,0.08)]
+               transition-all duration-300 flex flex-col justify-between min-h-[240px] group"
+      >
+        <div>
+          <div class="flex items-start justify-between gap-3 mb-4">
+            <div class="min-w-0">
+              <h4 class="text-lg font-semibold text-on-surface leading-snug truncate">
+                {{ offre.titre }}
+              </h4>
+              <p class="text-sm text-primary font-medium mt-1">
+                {{ offre.entreprise }}
+              </p>
+            </div>
+
+            <span
+              class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold shrink-0"
+              [class.bg-tertiary-container]="offre.statut === 'active'"
+              [class.text-tertiary]="offre.statut === 'active'"
+              [class.bg-surface-container]="offre.statut !== 'active'"
+              [class.text-on-surface-variant]="offre.statut !== 'active'"
+            >
+              {{ offre.statut }}
+            </span>
+          </div>
+
+          <div class="flex items-center gap-2 text-sm text-on-surface-variant mb-5">
+            <span class="material-symbols-outlined text-[18px]">location_on</span>
+            <span class="truncate">{{ offre.localisation }} · {{ offre.typeContrat }}</span>
+          </div>
+
+          <div class="bg-surface-container-low rounded-2xl px-4 py-3 border border-outline-variant/30">
+            <p class="text-xs uppercase tracking-[0.14em] text-on-surface-variant font-semibold mb-1">
+              Statut actuel
+            </p>
+            <p class="text-sm font-medium text-on-surface">
+              Offre {{ offre.statut === 'active' ? 'active et visible' : 'non active' }}
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          (click)="voirCandidatures(offre)"
+          class="w-full mt-6 py-3 rounded-2xl bg-primary text-on-primary text-sm font-semibold
+                 shadow-sm hover:opacity-95 hover:shadow-md transition-all duration-200"
+        >
+          Voir les candidatures
+        </button>
+      </div>
+
+      <div
+        *ngIf="offres.length === 0"
+        class="md:col-span-2 xl:col-span-3 bg-surface-container-lowest border border-outline-variant/40
+               rounded-3xl py-16 px-6 text-center shadow-[0_10px_30px_rgba(15,25,40,0.04)]"
+      >
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-primary-container flex items-center justify-center mb-4">
+          <span class="material-symbols-outlined text-primary text-3xl">work</span>
+        </div>
+        <p class="text-base font-semibold text-on-surface">
+          Aucune offre publiée
+        </p>
+        <p class="text-sm text-on-surface-variant mt-2">
+          Publiez votre première offre pour commencer à recevoir des candidatures.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Candidats recommandés -->
+  <section class="space-y-7">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-tertiary">
+          Matching intelligent
+        </p>
+        <h2 class="mt-1 text-2xl md:text-3xl font-headline font-bold text-on-surface tracking-tight">
+          Candidats recommandés
+        </h2>
+        <p class="mt-2 text-sm text-on-surface-variant">
+          Découvrez les profils les plus pertinents selon vos besoins de recrutement.
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="chargementCandidats" class="text-sm text-on-surface-variant">
+      Chargement des candidats...
+    </div>
+
+    <div *ngIf="!chargementCandidats" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+      <div
+        *ngFor="let candidat of candidats"
+        class="bg-surface-container-lowest border border-outline-variant/40 rounded-3xl p-6
+               shadow-[0_10px_30px_rgba(15,25,40,0.05)] hover:shadow-[0_14px_40px_rgba(15,25,40,0.08)]
+               relative transition-all duration-300"
+      >
+
+        <div
+          class="absolute top-5 right-5 px-3 py-1 rounded-full bg-tertiary-container text-tertiary
+                 font-semibold text-[11px] tracking-[0.12em] uppercase"
+        >
+          Recommandé
+        </div>
+
+        <div class="flex flex-col items-center text-center mb-6 pt-2">
+          <div
+            class="w-20 h-20 rounded-full bg-primary-container flex items-center justify-center
+                   text-2xl font-bold text-primary shadow-sm mb-4"
+          >
+            {{ candidat.prenom.charAt(0) }}{{ candidat.nom.charAt(0) }}
+          </div>
+
+          <h4 class="text-lg font-semibold text-on-surface">
+            {{ candidat.prenom }} {{ candidat.nom }}
+          </h4>
+
+          <p class="text-sm text-on-surface-variant mt-1">
+            {{ candidat.jobTitle }}
+          </p>
+
+          <div class="flex items-center gap-1.5 text-xs text-on-surface-variant mt-2">
+            <span class="material-symbols-outlined text-[16px]">location_on</span>
+            <span>{{ candidat.personalInfo.localisation }}</span>
+          </div>
+        </div>
+
+        <div class="bg-surface-container-low rounded-2xl p-4 border border-outline-variant/30 mb-5">
+          <p class="text-xs uppercase tracking-[0.14em] text-on-surface-variant font-semibold mb-1">
+            Correspondance
+          </p>
+          <p class="text-sm text-on-surface">
+            Profil recommandé pour vos besoins actuels.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <button
+            type="button"
+            [routerLink]="['/recruteur/candidat', candidat.id]"
+            class="w-full py-3 rounded-2xl border border-outline-variant text-on-surface
+                   text-sm font-medium hover:bg-surface-container transition-colors"
+          >
+            Voir le profil
+          </button>
+
+          <button
+            type="button"
+            (click)="inviterCandidat(candidat)"
+            class="w-full py-3 rounded-2xl bg-primary text-on-primary text-sm font-semibold
+                   shadow-sm hover:opacity-95 hover:shadow-md transition-all duration-200"
+          >
+            Inviter à un entretien
+          </button>
+        </div>
+      </div>
+
+      <div
+        *ngIf="candidats.length === 0"
+        class="md:col-span-2 xl:col-span-3 bg-surface-container-lowest border border-outline-variant/40
+               rounded-3xl py-16 px-6 text-center shadow-[0_10px_30px_rgba(15,25,40,0.04)]"
+      >
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-tertiary-container flex items-center justify-center mb-4">
+          <span class="material-symbols-outlined text-tertiary text-3xl">group</span>
+        </div>
+        <p class="text-base font-semibold text-on-surface">
+          Aucun candidat recommandé
+        </p>
+        <p class="text-sm text-on-surface-variant mt-2">
+          Les recommandations apparaîtront ici selon vos offres et vos critères.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+</div>

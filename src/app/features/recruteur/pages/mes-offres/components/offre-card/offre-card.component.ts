@@ -1,40 +1,51 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-export interface Offre {
-  id: number;
-  titre: string;
-  localisation: string;
-  candidatures: number;
-  recommandes: number;
-  statut: 'active' | 'soon' | 'expired';
-  icone: string;
-}
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { OffreCardViewModel } from '../../../../../../models/offre-card-view.model';
 
 @Component({
   selector: 'app-offre-card',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './offre-card.component.html',
-  styles: []
 })
 export class OffreCardComponent {
+  @Input() offre!: OffreCardViewModel;
 
-  @Input({ required: true }) offre!: Offre;
-
-  @Output() voirCandidats = new EventEmitter<Offre>();
-  @Output() modifier = new EventEmitter<Offre>();
-  @Output() supprimer = new EventEmitter<Offre>();
+  @Output() voirCandidats = new EventEmitter<OffreCardViewModel>();
+  @Output() modifier = new EventEmitter<OffreCardViewModel>();
+  @Output() supprimer = new EventEmitter<OffreCardViewModel>();
 
   get statutLabel(): string {
-    if (this.offre.statut === 'active') return 'Active';
-    if (this.offre.statut === 'soon') return 'Bientôt';
-    return 'Expirée';
+    switch ((this.offre?.statut || '').toUpperCase()) {
+      case 'ACTIVE':
+        return 'Active';
+      case 'BROUILLON':
+        return 'Brouillon';
+      case 'EXPIREE':
+        return 'Expirée';
+      case 'NOUVELLE':
+        return 'Nouvelle';
+      case 'INACTIVE':
+        return 'Inactive';
+      default:
+        return this.offre?.statut || 'Statut';
+    }
   }
 
   get statutClasse(): string {
-    if (this.offre.statut === 'active') return 'bg-green-100 text-green-700 border border-green-200';
-    if (this.offre.statut === 'soon') return 'bg-orange-100 text-orange-700 border border-orange-200';
-    return 'bg-red-100 text-red-700 border border-red-200';
+    switch ((this.offre?.statut || '').toUpperCase()) {
+      case 'ACTIVE':
+        return 'bg-tertiary-container text-on-tertiary-container';
+      case 'BROUILLON':
+        return 'bg-warning-container text-on-warning-container';
+      case 'EXPIREE':
+        return 'bg-error-container text-error';
+      case 'NOUVELLE':
+        return 'bg-primary-container text-primary';
+      case 'INACTIVE':
+        return 'bg-surface-container-high text-on-surface';
+      default:
+        return 'bg-surface-container text-on-surface-variant';
+    }
   }
 }

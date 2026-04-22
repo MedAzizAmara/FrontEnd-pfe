@@ -1,10 +1,23 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileHeaderComponent } from '../profile-header/profile-header.component';
-import { PersonalInfoComponent } from '../personal-info/personal-info.component';
-import { ExperienceSectionComponent, Experience } from '../experience-section/experience-section.component';
-import { EducationSectionComponent, Education } from '../education-section/education-section.component';
-import { SkillsSectionComponent, SkillGroup, Language } from '../skills-section/skills-section.component';
+import { ProfileHeaderComponent } from './profile-page/profile-header/profile-header.component';
+import { PersonalInfoComponent } from './profile-page/personal-info/personal-info.component';
+import { SkillsSectionComponent } from './profile-page/skills-section/skills-section.component';
+import { LanguagesSectionComponent } from './profile-page/languages-section/languages-section.component';
+import { ExperienceSectionComponent } from './profile-page/experience-section/experience-section.component';
+import { EducationSectionComponent } from './profile-page/education-section/education-section.component';
+
+export interface PersonalInfoData {
+  nomComplet: string;
+  titre: string;
+  email: string;
+  telephone: string;
+  localisation: string;
+  dateNaissance: string;
+  github: string;
+  linkedin: string;
+  portfolio: string;
+}
 
 @Component({
   selector: 'app-profile-page',
@@ -13,84 +26,84 @@ import { SkillsSectionComponent, SkillGroup, Language } from '../skills-section/
     CommonModule,
     ProfileHeaderComponent,
     PersonalInfoComponent,
-    ExperienceSectionComponent,
-    EducationSectionComponent,
     SkillsSectionComponent,
+    LanguagesSectionComponent,
+    ExperienceSectionComponent,
+    EducationSectionComponent
   ],
   templateUrl: './profile-page.component.html',
+  styleUrls: ['./profile-page.component.css']
 })
 export class ProfilePageComponent {
-
-  // true = candidat (peut modifier), false = recruteur (lecture seule)
-  isOwner = true;
   isEditing = false;
 
-  fullName = 'LUCAS MARTIN';
-  jobTitle = 'STAGIAIRE EN MAÇONNERIE';
-  avatarUrl = 'assets/lucas.jpg';
-  age = 17;
-  permis = 'Permis de conduire (B)';
-  location = 'Villeurbanne, France';
-  email = 'lucas@doyoubuzz.com';
-  phone = '06 74 97 xx 66 54';
+  personalInfo: PersonalInfoData = {
+    nomComplet: 'Aziz Amara',
+    titre: 'Frontend Developer',
+    email: 'aziz.amara@email.com',
+    telephone: '+216 55 123 456',
+    localisation: 'Tunis, Tunisie',
+    dateNaissance: '2001-08-12',
+    github: 'github.com/azizamara',
+    linkedin: 'linkedin.com/in/azizamara',
+    portfolio: 'www.azizportfolio.dev'
+  };
 
-  experiences: Experience[] = [
-    {
-      title: 'STAGE EN JARDINAGE ET AMÉNAGEMENT PAYSAGER',
-      company: 'Jardin & Vous',
-      period: 'Novembre 2023',
-      tasks: [
-        'Participation à la création de 3 terrasses et à la pose de pavés, dont une en semi-autonomie.',
-        "Utilisation d'outils de maçonnerie pour la construction de murs de soutènement.",
-      ],
-    },
-    {
-      title: "VENDEUR D'ARTICLES DE SPORT",
-      company: 'DoYouSport',
-      period: 'Juillet 2023 à septembre 2023',
-      tasks: [
-        'Service client (conseils et tenue de la caisse)',
-        'Réparation des vélos des clients sur devis (environ 3 par semaine).',
-        'Gestion des stocks (réception, mise en stock, inventaire)',
-      ],
-    },
+  competences: string[] = [
+    'Angular',
+    'TypeScript',
+    'JavaScript',
+    'HTML',
+    'CSS',
+    'Tailwind CSS'
   ];
 
-  educations: Education[] = [
-    { period: '2022 à 2023', school: 'Lycée Paul Valéry de Lyon', degree: 'Seconde générale' },
-    { period: '2021', school: 'Collège Jean Moulin (Lyon)', degree: "Brevet d'Études du Premier Cycle (BEPC)" },
+  langues: string[] = [
+    'Arabe - Natif',
+    'Français - C1',
+    'Anglais - B2'
   ];
 
-  skillGroups: SkillGroup[] = [
-    {
-      groupTitle: 'COMPÉTENCES EN MAÇONNERIE',
-      skills: [
-        'Manipulation des outils courants',
-        'Pose de pavés',
-        'Création de terrasses',
-        'Construction de mur de soutènement',
-      ],
-    },
+  experiences: string[] = [
+    'Frontend Developer - ToutaJob - Jan 2025 à Présent',
+    'Stagiaire Développeur Web - TechNova - Juin 2024 à Août 2024'
   ];
 
-  languages: Language[] = [
-    { name: 'Français', level: 'C2', percent: 100, note: 'Langue maternelle' },
-    { name: 'Espagnol', level: 'B2', percent: 80, note: 'TOEIC : 900' },
+  formations: string[] = [
+    'Licence en Informatique - ISAMM - 2021 à 2024',
+    'Baccalauréat Informatique - Lycée pilote - 2020 à 2021'
   ];
 
-  onEditClicked() {
-    this.isEditing = true;
-  }
+  private snapshot = {
+    personalInfo: { ...this.personalInfo },
+    competences: [...this.competences],
+    langues: [...this.langues],
+    experiences: [...this.experiences],
+    formations: [...this.formations]
+  };
 
-  onSaveClicked() {
+  onToggleEdit(): void {
+    if (!this.isEditing) {
+      this.snapshot = {
+        personalInfo: { ...this.personalInfo },
+        competences: [...this.competences],
+        langues: [...this.langues],
+        experiences: [...this.experiences],
+        formations: [...this.formations]
+      };
+      this.isEditing = true;
+      return;
+    }
+
     this.isEditing = false;
-    // Plus tard : appel API ici
-  }
-  onJobTitleChanged(value: string) {
-    this.jobTitle = value;
   }
 
-  onAvatarChanged(value: string) {
-    this.avatarUrl = value;
+  onCancelEdit(): void {
+    this.personalInfo = { ...this.snapshot.personalInfo };
+    this.competences = [...this.snapshot.competences];
+    this.langues = [...this.snapshot.langues];
+    this.experiences = [...this.snapshot.experiences];
+    this.formations = [...this.snapshot.formations];
+    this.isEditing = false;
   }
 }

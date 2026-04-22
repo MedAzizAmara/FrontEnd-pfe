@@ -1,117 +1,157 @@
-<aside class="fixed left-0 top-0 pt-16 bg-surface-container-low border-r border-outline-variant/20 flex flex-col p-4 space-y-2 text-sm z-30
-              h-screen w-16 lg:w-64 transition-all">
-
-  <!-- Profil (caché sur mobile) -->
-  <div class="hidden lg:block mb-8 px-2 py-4">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-lg flex items-center justify-center text-on-primary font-bold"
-           style="background: linear-gradient(135deg, #0056d2 0%, #b2c5ff 100%)">
-        {{ authService.getUser()?.nom?.charAt(0)?.toUpperCase() }}
-      </div>
-      <div>
-        <p class="font-bold text-primary text-lg font-headline">{{ authService.getUser()?.nom }}</p>
-        <p class="text-on-surface-variant text-xs uppercase font-bold tracking-widest">{{ authService.getUser()?.role }}</p>
-      </div>
+<aside class="fixed left-0 top-0 z-30 flex h-screen w-16 flex-col border-r border-outline-variant bg-surface-container-lowest lg:w-64">
+  <div class="flex h-16 flex-shrink-0 items-center justify-center gap-2.5 px-3 lg:justify-start lg:px-5">
+    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+      <span class="material-symbols-outlined text-sm text-on-primary">work</span>
     </div>
+    <span class="hidden font-headline text-base font-bold text-on-surface lg:block">
+      ToutaJob
+    </span>
   </div>
 
-  <!-- Navigation Admin -->
-  <nav class="flex-1 flex flex-col space-y-1" *ngIf="authService.getUser()?.role === 'admin'">
-    <a routerLink="/admin/recruteurs"
-       routerLinkActive="bg-primary-container/20 text-primary font-bold"
-       class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors duration-200">
-      <span class="material-symbols-outlined">verified_user</span>
-      <span class="hidden lg:inline">Validation recruteurs</span>
-    </a>
-    <a routerLink="/admin/parametres"
-       routerLinkActive="bg-primary-container/20 text-primary font-bold"
-       class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors duration-200">
-      <span class="material-symbols-outlined">settings</span>
-      <span class="hidden lg:inline">Paramètres</span>
-    </a>
-    <div class="mt-auto">
-      <a (click)="logout()"
-         class="flex items-center gap-3 px-3 py-3 text-error hover:bg-error-container/20 rounded-lg cursor-pointer transition-colors duration-200">
+  <!-- NAV CANDIDAT -->
+  <nav
+    class="flex flex-1 flex-col space-y-1 overflow-y-auto px-3 py-4"
+    *ngIf="authService.getRole() === 'CANDIDAT'"
+  >
+    <div>
+      <p class="hidden px-3 pb-2 text-xs font-semibold uppercase tracking-widest text-on-surface-variant lg:block">
+        Espace candidat
+      </p>
+
+      <a
+        routerLink="/candidat/dashboard"
+        routerLinkActive="bg-primary-container text-primary font-semibold"
+        class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container"
+      >
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="hidden lg:inline">Dashboard</span>
+      </a>
+
+      <a
+        routerLink="/candidat/job-list"
+        routerLinkActive="bg-primary-container text-primary font-semibold"
+        class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container"
+      >
+        <span class="material-symbols-outlined">search</span>
+        <span class="hidden lg:inline">Offres</span>
+      </a>
+
+      <a
+        routerLink="/candidat/entretiens"
+        routerLinkActive="bg-primary-container text-primary font-semibold"
+        class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container"
+      >
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span class="hidden lg:inline">Entretiens</span>
+      </a>
+
+      <a
+        routerLink="/candidat/profil"
+        routerLinkActive="bg-primary-container text-primary font-semibold"
+        class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container"
+      >
+        <span class="material-symbols-outlined">person</span>
+        <span class="hidden lg:inline">Mon profil</span>
+      </a>
+    </div>
+
+    <div class="mt-auto border-t border-outline-variant pt-4">
+      <button
+        (click)="deconnecter()"
+        class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-error transition-colors hover:bg-error-container"
+      >
         <span class="material-symbols-outlined">logout</span>
         <span class="hidden lg:inline">Déconnexion</span>
-      </a>
+      </button>
     </div>
   </nav>
 
-  <!-- Navigation Recruteur -->
-  <nav class="flex-1 flex flex-col space-y-1" *ngIf="authService.getUser()?.role === 'recruteur'">
-    <a routerLink="/recruteur/dashboard"
-       routerLinkActive="bg-primary-container/20 text-primary font-bold"
-       class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors duration-200">
-      <span class="material-symbols-outlined">stars</span>
-      <span class="hidden lg:inline">Dashboard</span>
-    </a>
-    <a routerLink="/recruteur/mes-offres"
-       routerLinkActive="bg-primary-container/20 text-primary font-bold"
-       class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors duration-200">
-      <span class="material-symbols-outlined">work</span>
-      <span class="hidden lg:inline">Mes offres</span>
-    </a>
-    <a routerLink="/recruteur/publier-offre"
-       routerLinkActive="bg-primary-container/20 text-primary font-bold"
-       class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors duration-200">
-      <span class="material-symbols-outlined">add_circle</span>
-      <span class="hidden lg:inline">Publier une offre</span>
-    </a>
-    <a routerLink="/recruteur/profil"
-       routerLinkActive="bg-primary-container/20 text-primary font-bold"
-       class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors duration-200">
-      <span class="material-symbols-outlined">person</span>
-      <span class="hidden lg:inline">Mon profil</span>
-    </a>
-    <div class="mt-auto">
-      <a (click)="logout()"
-         class="flex items-center gap-3 px-3 py-3 text-error hover:bg-error-container/20 rounded-lg cursor-pointer transition-colors duration-200">
+  <!-- NAV RECRUTEUR -->
+  <nav
+    class="flex flex-1 flex-col space-y-1 overflow-y-auto px-3 py-4"
+    *ngIf="authService.getRole() === 'RECRUTEUR'"
+  >
+    <div>
+      <p class="hidden px-3 pb-2 text-xs font-semibold uppercase tracking-widest text-on-surface-variant lg:block">
+        Espace recruteur
+      </p>
+
+      <a
+        routerLink="/recruteur/recruteur-home"
+        routerLinkActive="bg-primary-container text-primary font-semibold"
+        class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container"
+      >
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="hidden lg:inline">Dashboard</span>
+      </a>
+
+      <a
+        routerLink="/recruteur/offres"
+        routerLinkActive="bg-primary-container text-primary font-semibold"
+        class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container"
+      >
+        <span class="material-symbols-outlined">work</span>
+        <span class="hidden lg:inline">Mes offres</span>
+      </a>
+
+      <a
+        routerLink="/recruteur/offres/nouvelle"
+        routerLinkActive="bg-primary-container text-primary font-semibold"
+        class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container"
+      >
+        <span class="material-symbols-outlined">add_circle</span>
+        <span class="hidden lg:inline">Publier une offre</span>
+      </a>
+
+      <a
+        routerLink="/recruteur/profil"
+        routerLinkActive="bg-primary-container text-primary font-semibold"
+        class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container"
+      >
+        <span class="material-symbols-outlined">person</span>
+        <span class="hidden lg:inline">Mon profil</span>
+      </a>
+    </div>
+
+    <div class="mt-auto border-t border-outline-variant pt-4">
+      <button
+        (click)="deconnecter()"
+        class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-error transition-colors hover:bg-error-container"
+      >
         <span class="material-symbols-outlined">logout</span>
         <span class="hidden lg:inline">Déconnexion</span>
-      </a>
+      </button>
     </div>
   </nav>
 
-  <!-- Navigation Candidat -->
-  <nav class="flex-1 flex flex-col space-y-1" *ngIf="authService.getUser()?.role === 'candidat'">
-    <a routerLink="/candidat/dashboard"
-       routerLinkActive="bg-primary-container/20 text-primary font-bold"
-       class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors duration-200">
-      <span class="material-symbols-outlined">stars</span>
-      <span class="hidden lg:inline">Dashboard</span>
-    </a>
-    <a routerLink="/offres-internes"
-       routerLinkActive="bg-primary-container/20 text-primary font-bold"
-       class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors duration-200">
-      <span class="material-symbols-outlined">business</span>
-      <span class="hidden lg:inline">Offres internes</span>
-    </a>
-    <a routerLink="/offres-externes"
-       routerLinkActive="bg-primary-container/20 text-primary font-bold"
-       class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors duration-200">
-      <span class="material-symbols-outlined">public</span>
-      <span class="hidden lg:inline">Offres externes</span>
-    </a>
-    <a routerLink="/candidat/candidatures"
-       routerLinkActive="bg-primary-container/20 text-primary font-bold"
-       class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors duration-200">
-      <span class="material-symbols-outlined">description</span>
-      <span class="hidden lg:inline">Mes candidatures</span>
-    </a>
-    <a routerLink="/candidat/profil"
-       routerLinkActive="bg-primary-container/20 text-primary font-bold"
-       class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors duration-200">
-      <span class="material-symbols-outlined">person</span>
-      <span class="hidden lg:inline">Mon profil</span>
-    </a>
-    <div class="mt-auto">
-      <a (click)="logout()"
-         class="flex items-center gap-3 px-3 py-3 text-error hover:bg-error-container/20 rounded-lg cursor-pointer transition-colors duration-200">
-        <span class="material-symbols-outlined">logout</span>
-        <span class="hidden lg:inline">Déconnexion</span>
+  <!-- NAV ADMIN -->
+  <nav
+    class="flex flex-1 flex-col space-y-1 overflow-y-auto px-3 py-4"
+    *ngIf="authService.getRole() === 'ADMIN'"
+  >
+    <div>
+      <p class="hidden px-3 pb-2 text-xs font-semibold uppercase tracking-widest text-on-surface-variant lg:block">
+        Espace admin
+      </p>
+
+      <a
+        routerLink="/admin/recruteurs"
+        routerLinkActive="bg-primary-container text-primary font-semibold"
+        class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container"
+      >
+        <span class="material-symbols-outlined">groups</span>
+        <span class="hidden lg:inline">Recruteurs</span>
       </a>
     </div>
-  </nav>
 
+    <div class="mt-auto border-t border-outline-variant pt-4">
+      <button
+        (click)="deconnecter()"
+        class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-error transition-colors hover:bg-error-container"
+      >
+        <span class="material-symbols-outlined">logout</span>
+        <span class="hidden lg:inline">Déconnexion</span>
+      </button>
+    </div>
+  </nav>
 </aside>

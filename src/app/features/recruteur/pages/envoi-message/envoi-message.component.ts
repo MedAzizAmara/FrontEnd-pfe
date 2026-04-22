@@ -10,13 +10,12 @@ import { PageHeaderService } from '../../../../services/page-header.service';
   imports: [
     CommonModule,
     InterviewFormComponent,
-    LetterPreviewComponent,
+    LetterPreviewComponent
   ],
   templateUrl: './envoi-message.component.html',
   styles: []
 })
 export class EnvoiMessageComponent implements OnInit {
-
   societe: string = 'ToutaJob';
   poste: string = 'Développeur Angular';
   telephone: string = '+216 XX XXX XXX';
@@ -27,16 +26,25 @@ export class EnvoiMessageComponent implements OnInit {
 
   constructor(private pageHeaderService: PageHeaderService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.pageHeaderService.setHeader(
       'Rédigez et envoyez une invitation d\'entretien au candidat.'
     );
   }
 
+  onFormChange(event: { date: string; heure: string }): void {
+    this.date = event.date;
+    this.heure = event.heure;
+  }
+
   onEnvoyer(): void {
     console.log('Invitation envoyée');
     console.log('Société :', this.societe);
+    console.log('Poste :', this.poste);
     console.log('Date :', this.date);
     console.log('Heure :', this.heure);
+    console.log('Téléphone :', this.telephone);
+    console.log('Email :', this.email);
+    console.log('Nom recruteur :', this.nomRecruteur);
   }
 }

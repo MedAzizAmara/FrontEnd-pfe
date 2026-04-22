@@ -1,0 +1,38 @@
+<div class="flex flex-col gap-6">
+
+  <app-job-application-header
+    [titre]="offre.titre"
+    [entreprise]="offre.entreprise"
+    [localisation]="offre.localisation"
+    [typeContrat]="offre.typeContrat"
+    [modeTravail]="offre.modeTravail"
+    [salaire]="offre.salaire"
+    [niveauExperience]="offre.niveauExperience"
+    [matchingScore]="matchingScore"
+  ></app-job-application-header>
+
+  <div class="flex flex-col gap-6 p-5">
+
+    <app-job-application-letter-form
+      [valeur]="lettreMotivation"
+      (valeurChange)="onLettreChange($event)"
+    ></app-job-application-letter-form>
+
+    <app-job-application-actions
+      [chargement]="chargement"
+      [disabled]="!lettreMotivation.trim()"
+      [texteBouton]="'Envoyer la candidature'"
+      (submitClicked)="envoyerCandidature()"
+    ></app-job-application-actions>
+
+  </div>
+
+  <!-- ✅ Message succès -->
+  <div
+    *ngIf="messageSucces"
+    class="rounded-2xl bg-tertiary-container px-4 py-3 text-sm text-on-tertiary-container"
+  >
+    {{ messageSucces }}
+  </div>
+
+</div>

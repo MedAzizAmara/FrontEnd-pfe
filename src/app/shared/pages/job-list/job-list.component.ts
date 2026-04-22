@@ -1,35 +1,96 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JobCardComponent } from '@shared/components/job-card/job-card.component';
+import { Router } from '@angular/router';
+import { JobCardComponent } from '../../components/job-card/job-card.component';
+import { OffreService } from '../../../services/offre.service';
+import { OffreEmploi } from '../../../models/offre-emploi.model';
+
+interface JobItem {
+  id: number;
+  title: string;
+  company: string;
+  email: string;
+  location: string;
+  logoUrl: string;
+  statut: string;
+}
 
 @Component({
   selector: 'app-job-list',
   standalone: true,
   imports: [CommonModule, JobCardComponent],
   templateUrl: './job-list.component.html',
+  styleUrls: ['./job-list.component.css']
 })
-export class JobListComponent {
-  jobs = [
-    {
-      title: 'Développeur Full Stack Angular / Spring Boot',
-      company: 'TechCorp Tunisia',
-      email: 'recrutement@techcorp.tn',
-      location: 'Tunis, TN',
-      logo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA18Mj-Htf_mgC_D_kWIGAsFHz_yNFkDRnPgBAbxbijdjKBNrPCgKnp8-Pb30xbL_heebSp-0ek8yABeqzNO2aUXeuOUFXpoJ28QDstE3xjHoB_GouPCAm0ThNqI97hTlyzr0eJz92vklOAtHAk4J7ejBLUg4oEzfvGH6Vmkue3quE3qAgRjAAqIvbk9KEuWs7DLipk1aN-qo29X3LkpPJJbdCXS80hwZroAt5pzrC69rvX9eYSnv6sq1HUm6WrBd2nednWGtRh7J4'
-    },
-    {
-      title: 'Directeur Artistique Senior',
-      company: 'Lumina Creative Agency',
-      email: 'recrutement@lumina.design',
-      location: 'Paris, FR',
-      logo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCrQN4sOoQAQsdRPlCy5NISVOWE_jgHJnLTUDOXi3mjFb2h6rPOzr3iq4akhA4ZRDrTEAyyToimctxLKYQcbtFkAxNY9yUW7229KH1CjKH1vV2cK9O45EYsmZhdCkn27mL-nxOfKP-PU0_4H3u9ko6WWZfQVTNPMlwMqic3gI0CtaFQE8OkyIwvFTZrGaoBTKA_OsH7MMw_SkUeImkDzTbxdWfSbvMhve1CFPhVSaEAsGf_m2o-pi_uiE0ynjLkqaWn81-4rE00JOk'
-    },
-    {
-      title: 'Architecte Solution Cloud',
-      company: 'DataSphere Systems',
-      email: 'hr@datasphere.io',
-      location: 'Lyon, FR (Hybride)',
-      logo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA18Mj-Htf_mgC_D_kWIGAsFHz_yNFkDRnPgBAbxbijdjKBNrPCgKnp8-Pb30xbL_heebSp-0ek8yABeqzNO2aUXeuOUFXpoJ28QDstE3xjHoB_GouPCAm0ThNqI97hTlyzr0eJz92vklOAtHAk4J7ejBLUg4oEzfvGH6Vmkue3quE3qAgRjAAqIvbk9KEuWs7DLipk1aN-qo29X3LkpPJJbdCXS80hwZroAt5pzrC69rvX9eYSnv6sq1HUm6WrBd2nednWGtRh7J4'
-    },
-  ];
+export class JobListComponent implements OnInit {
+  jobs: JobItem[] = [];
+  loading = false;
+  errorMessage = '';
+
+  constructor(
+    private offreService: OffreService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.chargerOffres();
+  }
+
+  chargerOffres(): void {
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.offreService.getToutesLesOffres().subscribe({
+      next: (offres: OffreEmploi[]) => {
+        this.jobs = offres.map((offre: OffreEmploi) => this.mapOffreToJobItem(offre));
+        this.loading = false;
+      },
+      error: (error: unknown) => {
+        console.error('Erreur lors du chargement des offres', error);
+        this.errorMessage = 'Impossible de charger les offres pour le moment.';
+        this.loading = false;
+      }
+    });
+  }
+
+  ouvrirDetails(job: JobItem): void {
+    void this.router.navigate(['/candidat/offres', job.id]);
+  }
+
+  postuler(job: JobItem): void {
+    void this.router.navigate(['/candidat/offres', job.id, 'postuler']);
+  }
+
+  private mapOffreToJobItem(offre: OffreEmploi): JobItem {
+    return {
+      id: offre.id ?? 0,
+      title: offre.titre,
+      company: offre.entreprise || 'Entreprise non renseignée',
+      email: offre.email || this.buildEmailFromEntreprise(offre.entreprise || ''),
+      location: offre.localisation,
+      logoUrl: offre.logoUrl || 'assets/images/company-placeholder.png',
+      statut: this.mapStatut(offre.statut)
+    };
+  }
+
+  private mapStatut(statut: string): string {
+    if (statut === 'active') {
+      return 'Nouveau';
+    }
+
+    if (statut === 'inactive') {
+      return 'Inactive';
+    }
+
+    return statut || 'Nouveau';
+  }
+
+  private buildEmailFromEntreprise(entreprise: string): string {
+    const slug = entreprise
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '')
+      .trim();
+
+    return `contact@${slug || 'entreprise'}.com`;
+  }
 }

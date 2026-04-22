@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -10,7 +10,6 @@ import { FormsModule } from '@angular/forms';
   styles: []
 })
 export class InterviewFormComponent {
-
   @Input() societe: string = '';
   @Input() poste: string = '';
   @Input() telephone: string = '';
@@ -18,16 +17,15 @@ export class InterviewFormComponent {
   @Input() nomRecruteur: string = '';
 
   @Output() envoyer = new EventEmitter<void>();
-  @Output() formChange = new EventEmitter<{date: string, heure: string}>();
+  @Output() formChange = new EventEmitter<{ date: string; heure: string }>();
 
   date: string = '';
   heure: string = '';
 
-  onDateChange(): void {
-    this.formChange.emit({ date: this.date, heure: this.heure });
-  }
-
-  onHeureChange(): void {
-    this.formChange.emit({ date: this.date, heure: this.heure });
+  onFormChange(): void {
+    this.formChange.emit({
+      date: this.date,
+      heure: this.heure
+    });
   }
 }

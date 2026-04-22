@@ -1,5 +1,15 @@
-<div class="max-w-5xl mx-auto px-8 py-12">
-  <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight mb-8">
-    Dashboard Candidat
-  </h1>
+<div class="min-h-screen bg-background px-4 py-8 md:px-8 lg:px-10">
+  <div class="mx-auto max-w-7xl space-y-8">
+
+    <app-dashboard-header [prenom]="prenom"></app-dashboard-header>
+
+    <app-dashboard-messages-section
+      [messages]="derniersMessages">
+    </app-dashboard-messages-section>
+
+    <app-dashboard-recommended-offers-section
+      [offres]="offresRecommandees">
+    </app-dashboard-recommended-offers-section>
+
+  </div>
 </div>

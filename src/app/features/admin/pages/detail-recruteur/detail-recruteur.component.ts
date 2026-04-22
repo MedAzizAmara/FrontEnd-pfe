@@ -34,10 +34,10 @@ export class DetailRecruteurComponent {
   }
 
   onAccepter(): void {
-    console.log('Recruteur accepté');
+    console.log('RecruteurModel accepté');
   }
 
   onRefuser(): void {
-    console.log('Recruteur refusé');
+    console.log('RecruteurModel refusé');
   }
 }

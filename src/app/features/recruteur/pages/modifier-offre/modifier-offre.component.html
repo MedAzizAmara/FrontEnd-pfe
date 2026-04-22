@@ -1,0 +1,129 @@
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-8">
+    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+      Recruteur
+    </p>
+    <h1 class="mt-1 text-2xl md:text-3xl font-headline font-bold text-on-surface">
+      Modifier l’offre
+    </h1>
+    <p class="mt-2 text-sm text-on-surface-variant">
+      Mettez à jour les informations de votre annonce.
+    </p>
+  </div>
+
+  <div class="bg-surface-container-lowest border border-outline-variant rounded-2xl shadow-sm p-6 md:p-8">
+    <div *ngIf="chargementInitial" class="text-sm text-on-surface-variant">
+      Chargement de l’offre...
+    </div>
+
+    <form *ngIf="!chargementInitial" class="space-y-6" (ngSubmit)="enregistrerModifications()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="md:col-span-2">
+          <label class="block text-sm font-semibold text-on-surface mb-2">
+            Titre du poste
+          </label>
+          <input
+            [(ngModel)]="form.titre"
+            name="titre"
+            type="text"
+            class="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-on-surface mb-2">
+            Localisation
+          </label>
+          <input
+            [(ngModel)]="form.localisation"
+            name="localisation"
+            type="text"
+            class="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-on-surface mb-2">
+            Type de contrat
+          </label>
+          <select
+            [(ngModel)]="form.typeContrat"
+            name="typeContrat"
+            class="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+          >
+            <option value="" disabled>Choisir un type</option>
+            <option value="CDI">CDI</option>
+            <option value="CDD">CDD</option>
+            <option value="Stage">Stage</option>
+            <option value="Freelance">Freelance</option>
+          </select>
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="block text-sm font-semibold text-on-surface mb-2">
+            Compétences requises
+          </label>
+          <input
+            [(ngModel)]="form.competencesRequises"
+            name="competencesRequises"
+            type="text"
+            class="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-on-surface mb-2">
+            Statut
+          </label>
+          <select
+            [(ngModel)]="form.statut"
+            name="statut"
+            class="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+          >
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="brouillon">Brouillon</option>
+          </select>
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="block text-sm font-semibold text-on-surface mb-2">
+            Description
+          </label>
+          <textarea
+            [(ngModel)]="form.description"
+            name="description"
+            rows="7"
+            class="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant text-sm text-on-surface outline-none resize-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+          ></textarea>
+        </div>
+      </div>
+
+      <div *ngIf="erreur" class="rounded-xl bg-error-container px-4 py-3 text-sm text-error">
+        {{ erreur }}
+      </div>
+
+      <div *ngIf="succes" class="rounded-xl bg-tertiary-container px-4 py-3 text-sm text-on-tertiary-container">
+        {{ succes }}
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-end gap-3 pt-2">
+        <button
+          type="button"
+          (click)="annuler()"
+          class="px-5 py-3 rounded-xl border border-outline-variant text-sm font-semibold text-on-surface bg-transparent hover:bg-surface-container transition-colors"
+        >
+          Annuler
+        </button>
+
+        <button
+          type="submit"
+          [disabled]="chargement"
+          class="px-5 py-3 rounded-xl bg-primary text-on-primary text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-60"
+        >
+          {{ chargement ? 'Enregistrement...' : 'Enregistrer les modifications' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

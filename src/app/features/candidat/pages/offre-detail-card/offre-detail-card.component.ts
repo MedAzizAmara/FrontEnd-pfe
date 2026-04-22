@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OffreEmploi } from '../../../../models/offre-emploi.model';
 
 @Component({
   selector: 'app-offre-detail-card',
@@ -7,33 +8,27 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './offre-detail-card.component.html',
 })
-export class OffreDetailCardComponent implements OnInit {
-  @Input() offre: any;
-  @Output() postulerOffre = new EventEmitter<any>();
+export class OffreDetailCardComponent {
+  @Input() offre!: OffreEmploi;
+  @Output() postulerOffre = new EventEmitter<OffreEmploi>();
 
-  ngOnInit() {
-    if (!this.offre) {
-      this.offre = {
-        titre: 'Développeur Full Stack Angular / Spring Boot',
-        entreprise: 'TechCorp Tunisia',
-        statut: 'Active',
-        datePublication: '05 Avril 2026',
-        contrat: 'CDI',
-        localisation: 'Tunis, Tunisie',
-        description: [
-          'Nous recherchons un développeur Full Stack passionné pour rejoindre notre équipe dynamique basée à Tunis.',
-          'Vous serez responsable du développement et de la maintenance de nos applications web en utilisant Angular pour le frontend et Spring Boot pour le backend.',
-          'Vous travaillerez en étroite collaboration avec nos équipes produit et design pour livrer des fonctionnalités de haute qualité dans un environnement agile.'
-        ],
-        competences: [
-          'Angular 17+', 'Spring Boot', 'Java 17', 'TypeScript',
-          'MySQL', 'REST API', 'Git', 'Tailwind CSS', 'Docker'
-        ]
-      };
-    }
+  postuler(): void {
+    this.postulerOffre.emit(this.offre);
   }
 
-  postuler() {
-    this.postulerOffre.emit(this.offre);
+  get descriptionParagraphs(): string[] {
+    if (!this.offre?.description) return [];
+    return this.offre.description
+      .split('\n')
+      .map(p => p.trim())
+      .filter(p => p.length > 0);
+  }
+
+  get competencesList(): string[] {
+    if (!this.offre?.competencesRequises) return [];
+    return this.offre.competencesRequises
+      .split(',')
+      .map(skill => skill.trim())
+      .filter(skill => skill.length > 0);
   }
 }

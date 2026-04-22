@@ -1,42 +1,85 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PageHeaderService } from '../../../../services/page-header.service';
+import { OffreService } from '../../../../services/offre.service';
+import { OffreEmploi } from '../../../../models/offre-emploi.model';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-publier-offre',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './publier-offre.component.html',
-  styles: []
+  styleUrls: ['./publier-offre.component.css']
 })
-export class PublierOffreComponent implements OnInit {
+export class PublierOffreComponent {
 
-  offre = {
+  offre: OffreEmploi = {
     titre: '',
-    contrat: 'cdi',
-    localisation: '',
-    datePublication: '',
     description: '',
-    competences: ''
+    competencesRequises: '',
+    localisation: '',
+    typeContrat: '',
+    statut: 'active'
   };
 
+  chargement = false;
+  erreur = '';
+
   constructor(
-    private router: Router,
-    private pageHeaderService: PageHeaderService
+    private offreService: OffreService,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
-  ngOnInit() {
-
-  }
-
   onPublier(): void {
-    console.log('Offre publiée:', this.offre);
-    this.router.navigate(['/recruteur/mes-offres']);
+    this.erreur = '';
+
+    if (
+      !this.offre.titre.trim() ||
+      !this.offre.description.trim() ||
+      !this.offre.competencesRequises.trim() ||
+      !this.offre.localisation.trim() ||
+      !this.offre.typeContrat.trim()
+    ) {
+      this.erreur = 'Veuillez remplir tous les champs obligatoires.';
+      return;
+    }
+
+    const userId = this.authService.getUserId();
+
+    if (!userId) {
+      this.erreur = 'Utilisateur non connecté.';
+      return;
+    }
+
+    const payload: OffreEmploi = {
+      titre: this.offre.titre,
+      description: this.offre.description,
+      competencesRequises: this.offre.competencesRequises,
+      localisation: this.offre.localisation,
+      typeContrat: this.offre.typeContrat,
+      statut: this.offre.statut || 'active',
+      recruteurId: Number(userId)
+    };
+
+    this.chargement = true;
+
+    this.offreService.creerOffre(payload).subscribe({
+      next: (nouvelleOffre) => {
+        this.chargement = false;
+        this.router.navigate(['/recruteur/mes-offres']);
+      },
+      error: (error) => {
+        console.error('Erreur publication offre :', error);
+        this.erreur = error?.error?.message || 'Erreur lors de la publication de l’offre.';
+        this.chargement = false;
+      }
+    });
   }
 
   onAnnuler(): void {
-    this.router.navigate(['/recruteur/mes-offres']);
+    this.router.navigate(['/recruteur/dashboard']);
   }
 }

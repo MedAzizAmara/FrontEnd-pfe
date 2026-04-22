@@ -1,21 +1,50 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { InterviewFormComponent } from './components/interview-form/interview-form.component';
+import { LetterPreviewComponent } from './components/letter-preview/letter-preview.component';
+import { PageHeaderService } from '../../../../services/page-header.service';
 
-import { EnvoiMessageComponent } from './envoi-message.component';
+@Component({
+  selector: 'app-envoi-message',
+  standalone: true,
+  imports: [
+    CommonModule,
+    InterviewFormComponent,
+    LetterPreviewComponent,
+  ],
+  templateUrl: './envoi-message.component.html',
+  styles: []
+})
+export class EnvoiMessageComponent implements OnInit {
+  societe: string = 'ToutaJob';
+  poste: string = 'Développeur Angular';
+  telephone: string = '+216 XX XXX XXX';
+  email: string = 'contact@toutajob.tn';
+  nomRecruteur: string = 'Alex Rivers';
+  date: string = '';
+  heure: string = '';
 
-describe('EnvoiMessageComponent', () => {
-  let component: EnvoiMessageComponent;
-  let fixture: ComponentFixture<EnvoiMessageComponent>;
+  constructor(private pageHeaderService: PageHeaderService) {}
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [EnvoiMessageComponent]
-    });
-    fixture = TestBed.createComponent(EnvoiMessageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  ngOnInit(): void {
+    this.pageHeaderService.setHeader(
+      'Rédigez et envoyez une invitation d\'entretien au candidat.'
+    );
+  }
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  onFormChange(event: { date: string; heure: string }): void {
+    this.date = event.date;
+    this.heure = event.heure;
+  }
+
+  onEnvoyer(): void {
+    console.log('Invitation envoyée');
+    console.log('Société :', this.societe);
+    console.log('Poste :', this.poste);
+    console.log('Date :', this.date);
+    console.log('Heure :', this.heure);
+    console.log('Téléphone :', this.telephone);
+    console.log('Email :', this.email);
+    console.log('Nom recruteur :', this.nomRecruteur);
+  }
+}

@@ -1,12 +1,43 @@
-<div class="max-w-4xl mx-auto p-6 md:p-10">
-  <div class="space-y-6">
+<div class="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:max-w-6xl lg:px-8">
+  <div class="mb-8">
+    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+      Offres disponibles
+    </p>
+    <h2 class="mt-1 font-headline text-2xl font-bold text-on-surface md:text-3xl">
+      Explorez les opportunités
+    </h2>
+    <p class="mt-2 text-sm text-on-surface-variant">
+      Découvrez les offres récentes et postulez facilement.
+    </p>
+  </div>
+
+  <div *ngIf="loading" class="rounded-xl border border-outline-variant bg-surface-container p-6 text-sm text-on-surface-variant">
+    Chargement des offres...
+  </div>
+
+  <div *ngIf="!loading && errorMessage" class="rounded-xl border border-error bg-error-container p-6 text-sm text-on-error-container">
+    {{ errorMessage }}
+  </div>
+
+  <div
+    *ngIf="!loading && !errorMessage && jobs.length === 0"
+    class="rounded-xl border border-outline-variant bg-surface-container p-6 text-sm text-on-surface-variant"
+  >
+    Aucune offre disponible pour le moment.
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && jobs.length > 0" class="flex flex-col gap-5">
     <app-job-card
       *ngFor="let job of jobs"
+      [id]="job.id"
       [title]="job.title"
       [company]="job.company"
       [email]="job.email"
       [location]="job.location"
-      [logoUrl]="job.logo">
+      [logoUrl]="job.logoUrl"
+      [statut]="job.statut"
+      (voirDetails)="ouvrirDetails(job)"
+      (postuler)="postuler(job)">
     </app-job-card>
   </div>
 </div>

@@ -1,0 +1,105 @@
+<div class="min-h-screen bg-background px-4 py-8 md:px-8">
+  <div class="mx-auto max-w-6xl">
+
+    <div class="mb-8 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <div>
+        <h1 class="font-headline text-3xl font-extrabold text-on-surface">
+          Boîte de réception
+        </h1>
+        <p class="mt-1 text-sm text-on-surface-variant">
+          Retrouvez ici tous vos messages d’entretien.
+        </p>
+      </div>
+
+      <div class="rounded-2xl border border-outline-variant bg-surface-container-low px-4 py-2 text-sm text-on-surface-variant">
+        {{ entretiens.length }} message(s)
+      </div>
+    </div>
+
+    <div class="space-y-5">
+      <article
+        *ngFor="let entretien of entretiens"
+        class="rounded-3xl border border-outline-variant/40 bg-surface-container-lowest p-6 shadow-[0_12px_30px_rgba(15,25,40,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(15,25,40,0.10)]"
+      >
+        <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+
+          <div class="flex items-start gap-4">
+            <div
+              class="flex h-14 w-14 items-center justify-center rounded-2xl"
+              [ngClass]="entretien.lu ? 'bg-secondary-container' : 'bg-primary-container'"
+            >
+              <span
+                class="material-symbols-outlined text-[24px]"
+                [ngClass]="entretien.lu ? 'text-secondary' : 'text-primary'"
+              >
+                mail
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex flex-wrap items-center gap-2">
+                <h2 class="text-lg font-bold text-on-surface">
+                  {{ entretien.societe }}
+                </h2>
+
+                <span
+                  class="rounded-full px-3 py-1 text-xs font-semibold"
+                  [ngClass]="entretien.lu
+                    ? 'bg-surface-container-high text-on-surface-variant'
+                    : 'bg-primary-container text-primary'"
+                >
+                  {{ entretien.lu ? 'Lu' : 'Nouveau' }}
+                </span>
+              </div>
+
+              <p class="text-sm text-on-surface-variant">
+                Invitation à un entretien pour le poste de
+                <span class="font-semibold text-on-surface">{{ entretien.poste }}</span>
+              </p>
+
+              <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-on-surface-variant">
+                <span class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+                  {{ entretien.date }}
+                </span>
+
+                <span class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[18px]">schedule</span>
+                  {{ entretien.heure }}
+                </span>
+
+                <span class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[18px]">person</span>
+                  {{ entretien.nomRecruteur }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+            <a
+              routerLink="/candidat/message-entretien"
+              class="inline-flex items-center gap-2 rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-on-primary transition hover:opacity-90"
+            >
+              <span class="material-symbols-outlined text-[18px]">visibility</span>
+              Lire message
+            </a>
+          </div>
+      </article>
+    </div>
+
+    <div
+      *ngIf="entretiens.length === 0"
+      class="rounded-3xl border border-dashed border-outline bg-surface-container-low px-8 py-16 text-center"
+    >
+      <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-container">
+        <span class="material-symbols-outlined text-primary text-[28px]">inbox</span>
+      </div>
+
+      <h2 class="text-xl font-bold text-on-surface">Aucun message</h2>
+      <p class="mt-2 text-sm text-on-surface-variant">
+        Vous n’avez pas encore reçu de message d’entretien.
+      </p>
+    </div>
+
+  </div>
+</div>
